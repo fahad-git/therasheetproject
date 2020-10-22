@@ -9,7 +9,7 @@ import LoginForm from './LoginForm';
 
 function Home(){
 
-    const history = useHistory();
+    // const history = useHistory();
     var [isRegistrationFormModalOpen, toggleRegistrationFormModal] = useState(false);
     var [isLoginModalOpen, toggleLoginModal] = useState(false);
 
@@ -34,8 +34,7 @@ function Home(){
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
                 >
-                    <Modal.Header closeButton>
-                        {/* <h2 className="text-center" style={{color:"#5376f4"}}><strong>Clinic Information</strong></h2> */}
+                    <Modal.Header className="jumbotron" closeButton>
                             <div className="container">
                                 <div className="jumbotron">
                                     <div className="row">

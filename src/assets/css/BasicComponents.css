@@ -57,6 +57,15 @@
     text-decoration: solid;
 }
 
+
+    .modal-backdrop{
+        background: transparent !important;
+    } 
+
+    .modal-content {
+        border:0px !important;
+    }
+
 @media screen and (max-width: 300px){
     .home_button{
         display: flex;
@@ -186,11 +195,3 @@
     margin-top: 10px;
     margin-bottom: 50px;
 }
-
-/* .modal-backdrop{
-    background: transparent !important;
-}
-
-.modal-content {
-    border:0px !important;
-} */

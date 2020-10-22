@@ -40,6 +40,8 @@ const Navbar = () => {
 
                     <li className="linkinnav"><button type="button" className="link-button" onClick={() => { handleNavLinkToggle(); history.push('/services'); }} >Services</button></li>
                     <li className="linkinnav"><button type="button" className="link-button" onClick={() => { handleNavLinkToggle(); history.push('/contact'); }} >Contact Us</button></li>
+                    <li className="extra linkinnav"><button type="button" className="link-button" ></button></li>
+                    <li className="extra linkinnav"><button type="button" className="link-button" ></button></li>
 
                 </ul>
                 <div onClick={handleNavLinkToggle} className="hamburger-toggle">
