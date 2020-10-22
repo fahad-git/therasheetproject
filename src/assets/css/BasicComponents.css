@@ -58,13 +58,7 @@
 }
 
 
-    .modal-backdrop{
-        background: transparent !important;
-    } 
 
-    .modal-content {
-        border:0px !important;
-    }
 
 @media screen and (max-width: 300px){
     .home_button{
@@ -194,4 +188,12 @@
     font-size: calc(6px + 2vmin);
     margin-top: 10px;
     margin-bottom: 50px;
+}
+
+.login-modal .modal-backdrop{
+    background: transparent !important;
+} 
+
+.login-modal .modal-content {
+    border:0px !important;
 }
