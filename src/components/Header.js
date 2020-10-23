@@ -24,24 +24,15 @@ function Header (props) {
 
 
     // const profileUrl = "https://www.unitex.com/wp-content/uploads/2018/04/Unitex-Nursing-Shortage-1.jpg";
-
-    const settinghandler = () => {
-        let settings = document.getElementById('settings');
-
-        if(settings.value === 'AccountInfo'){
-            this.setState({"accountInfoPopup":true, "params":[this.state.username, this.state.clinicianName]});
-        }
-        else if (settings.value === 'Logout')
-            this.logout()
-        else if (settings.value === 'ChangePassword'){
-            this.setState({"changepasswordpopup":true, "params":[this.state.username]});
-        }
-
-        settings.selectedIndex = 0;
-    }
     
-    const homeHandler = () => {
-        alert("working")
+    const profileInfoHandler = () => {
+        alert("working");
+    }
+    const changePasswordHandler = () => {
+        alert("working");
+    }
+    const logoutHandler = () =>{
+        alert("logout");
     }
 
     const handleProfileLinkToggle = () => {
@@ -144,9 +135,10 @@ function Header (props) {
                     </div>  
                     <hr/> 
                 </li>
-                <li className="headerlink"><a className="ainheader" href={"#"} onClick={homeHandler} >Profile Info</a></li>
-                <li className="headerlink"><a className="ainheader" href={"#"} >Change Password</a></li>
-                <li className="headerlink"><a className="ainheader" href={"#"} >Logout</a></li>
+                <li className="headerlink"><a className="ainheader" href={"#"} onClick={profileInfoHandler} >Profile Info</a></li>
+                <li className="headerlink"><a className="ainheader" href={"#"} onClick={changePasswordHandler} >Change Password</a></li>
+                <li className="headerlink"><a className="ainheader" href={"#"} onClick={logoutHandler} >Logout</a></li>
+
                 <li className="headerlink hide"><a className="ainheader" href={"#"} ></a></li>
                 <li className="headerlink hide"><a className="ainheader" href={"#"} ></a></li>
                 <li className="headerlink hide"><a className="ainheader" href={"#"} ></a></li>

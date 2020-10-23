@@ -12,8 +12,8 @@ import blocked_clinic_icon from '../assets/img/clinic_icon.png';
 
 
 import ClinicInfo from './ClinicInfo';
-// import AdminInfo from './adminInfo';
-// import ChangePassword from './changePassword';
+import AdminInfo from './AdminInfo';
+import ChangePassword from './ChangePassword';
 
 
 function Admin () {
@@ -73,10 +73,10 @@ function Admin () {
 
     const modalHeaderColor = "rgba(4, 13, 43, 0.8)";
 
-    const history = useHistory();
+    const history = useHistory();   
 
-    var [adminName, setAdminName] = useState('');
-    var [userName, setUserName] = useState('');
+    var [adminName, setAdminName] = useState('John');
+    var [userName, setUserName] = useState('johntherasheet');
     var [profileURL, setProfileURL] = useState('');
     var [clinicsInformation, setClinicsInformation] = useState(elems);
     var [params, setParams] = useState([]);
@@ -86,25 +86,11 @@ function Admin () {
     var [isPasswordChange, passwordChangeToggle] = useState(false);
 
 
-
-    const settinghandler= () =>{
-        let settings = document.getElementById('settings');
-
-        if(settings.value === 'AccountInfo'){
-            setParams(userName);
-            accountInfoToggle(true);
-        }
-        else if (settings.value === 'Logout')
-            history.push('/home');
-        else if (settings.value === 'ChangePassword'){
-            setParams(userName);
-            passwordChangeToggle(true);
-        }
-        settings.selectedIndex = 0;
-    }
-
     const addClinicHandler = () =>{
-        alert("New Clinic Will be Added")
+        // alert("New Clinic Will be Added")
+        setParams([userName]);
+        // passwordChangeToggle(true);
+        accountInfoToggle(true);
     }
     
 
@@ -161,13 +147,13 @@ function Admin () {
                         <h2 className="text-center" style={{color:modalHeaderColor}}><strong>Admin Information</strong></h2>
                     </Modal.Header>
                     <Modal.Body>
-                        {/* {<AdminInfo params={this.state.params}/>} */}
+                        {<AdminInfo params={params}/>}
                     </Modal.Body>
                 </Modal>
 
                 {/* Modal 3 this modal is for Admin Password Change*/}
                 <Modal show={isPasswordChange}
-                    onHide = {()=> passwordChangeToggle}
+                    onHide = {()=> passwordChangeToggle(false)}
                     size="md"
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
@@ -176,7 +162,7 @@ function Admin () {
                         <h3 className="text-center" style={{color:background_color}}><strong>Admin Password Change</strong></h3>
                     </Modal.Header>
                     <Modal.Body>
-                        {/* {<ChangePassword userName={userName}/>} */}
+                        {<ChangePassword params={params}/>}
                     </Modal.Body>
                 </Modal>
 
