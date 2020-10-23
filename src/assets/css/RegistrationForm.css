@@ -24,6 +24,17 @@
     height: 10vmin;
     font-size: calc(2px + 2vmin);
 }
+
+.passwordfield{
+    background: #f7f9fc;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    outline: none;
+    color: inherit;
+    font-size: calc(2px + 2vmin);
+}
+
 .registrationform .already {
     display: block;
     text-align: center;

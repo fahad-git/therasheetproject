@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 
 import './../assets/bootstrap/css/bootstrap.min.css';
+import '../assets/fonts/ionicons.min.css';
 import './../assets/css/RegistrationForm.css';
 
 function RegistrationForm(){
@@ -15,6 +16,8 @@ function RegistrationForm(){
     var [password, setPassword] = useState('');
     var [passwordRepeat, setPasswordRepeat] = useState('');
     var [signupEnableToggle, setSignupEnableToggle] = useState(false);
+    var [password_eye_icon, set_password_eye_icon] = useState("ion-eye");
+
 
     const updateClinicName = (e) => setClinicName(e.target.value);
     const updateOwnerName = (e) => setOwnerName(e.target.value);
@@ -71,6 +74,14 @@ function RegistrationForm(){
     }
 
 
+    
+    const togglePassword = () => {
+        if(password_eye_icon === "ion-eye")
+            set_password_eye_icon("ion-eye-disabled");
+        else
+            set_password_eye_icon("ion-eye");
+    }
+
     const submit = () =>{
         
         let object = {
@@ -88,6 +99,7 @@ function RegistrationForm(){
         console.log(object);
     }
 
+
     return <div className="registrationform">
                 <div className="container">
                     <div className="row">
@@ -95,23 +107,14 @@ function RegistrationForm(){
                             <div className="image-holder"></div>
                         </div>
                         <div className="col-12 col-sm-9">
-                            {/* <div className="jumbotron">
-                                <div className="row">
-                                    <div className="col-12">
-                                        <h2 style={{textAlign:"center"}}><strong>Register Clinic</strong></h2>
-                                    </div>
-                                </div>
-                            </div> */}
                             <div className="row">
                                 <div className="col-12 form-group"><input className="form-control"  type="text" name="clinicName" placeholder="Clinic Name" onChange = {updateClinicName}/></div>
                                 <div className="col-12 form-group"><input className="form-control" type="text" name="ownerName" placeholder="Owner Name" onChange = {updateOwnerName}/></div>
-                                {/* this is for usernam validation */}
-                                <div className="col-5 form-group">
-                                    <label  className="form-control" style={{textAlign:"center", paddingTop:"3vmin"}}><strong id="username-status"></strong></label>
+
+                                <div className="col-12 form-group">
+                                    <input className="col-12 form-control" type="text" name="facilityaddress" placeholder="Facility Address" onChange = {updateFacilityAddress}/>
                                 </div>
-                                <div className="col-7 form-group">
-                                    <input className="form-control" type="text" name="username" placeholder="UserName" onChange={validateAndUpdateUserName} />
-                                </div>
+                            
 {/* Start */}
                                 {/* this is for country code */}
                                 <div className="col-5 form-group">
@@ -336,13 +339,33 @@ function RegistrationForm(){
                                     </select>
                                     {/* <label id="phonecountrycode" className="form-control">Hello</label> */}
                                 </div>
+
                                 <div className="col-7 form-group">
                                     <input className="col-12 form-control" type="tel" id="phone" name="phone" placeholder="Phone Number" pattern="[0-9]{3,14}" onChange = {updatePhoneNumber}/>
                                 </div>
-                                <div className="col-12 form-group"><input className="col-12 form-control" type="text" name="facilityaddress" placeholder="Facility Address" onChange = {updateFacilityAddress}/></div>
-                                <div className="col-12 form-group"><input className="col-12 form-control" type="email" name="email" placeholder="Email" onChange = {updateEmailAddress}/></div>
-                                <div className="col-12 form-group"><input className="form-control" type="password" name="password" placeholder="Password" onChange = {updatePassword} /></div>
-                                <div className="col-12 form-group"><input className="form-control" type="password" name="passwordrepeat" placeholder="Password (repeat)" onChange = {updatePasswordRepeat} /></div>
+
+                                <div className="col-12 form-group">
+                                    <input className="col-12 form-control" type="email" name="email" placeholder="Email" onChange = {updateEmailAddress}/>
+                                </div>
+
+                                {/* this is for username validation */}
+                                <div className="col-5 form-group">
+                                    <label  className="form-control" style={{textAlign:"center", paddingTop:"3vmin"}}><strong id="username-status"></strong></label>
+                                </div>
+
+                                <div className="col-7 form-group">
+                                    <input className="form-control" type="text" name="username" placeholder="UserName" onChange={validateAndUpdateUserName} />
+                                </div>
+
+                                <div className="col-12 form-group ">
+                                    <div className="col-12 form-control">
+                                        <input className="col-8 col-md-9 col-lg-10 passwordfield" type={ (password_eye_icon=== "ion-eye") ? "password" : "text"} name="password" placeholder="Password" onChange = {updatePassword} />
+                                        <i className="col-4 col-md-3 col-lg-2" className={password_eye_icon} onClick={togglePassword} ></i>
+                                    </div>
+                                </div>
+                                <div className="col-12 form-group">
+                                    <input className="form-control" type="password" name="passwordrepeat" placeholder="Password confirmation" onChange = {updatePasswordRepeat} />
+                                </div>
                                 <div className="col-12 form-group">
                                     <div className="col-12 form-check"><label style={{fontSize:"calc(3px + 2vmin)"}} className="form-check-label"><input className="form-check-input" type="checkbox" onClick={signupEnable} />I have read and agree to Therasheet's <a href="#" onClick={terms_and_condition_event}>terms and conditions</a></label></div>
                                 </div>
