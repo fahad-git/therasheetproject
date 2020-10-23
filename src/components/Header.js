@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect } from 'react';
 
 import '../assets/bootstrap/css/bbootstrap.min.css';
 import '../assets/bootstrap/css/bootstrap.min.css';
@@ -11,6 +11,11 @@ function Header (props) {
 
     const [navLinkOpen, navLinkToggle] = useState(true);
     const [profileLinkOpen, profileLinkToggle] = useState(true);
+
+    const settingNode = useRef();
+    const settingButtonNode = useRef();
+    const profileNode = useRef();
+    const profileButtonNode = useRef();
 
     // username and account type will be passed to this component.
     var [userName, setUsername] = useState(props.userName);
@@ -68,15 +73,48 @@ function Header (props) {
         return classes;
     }
 
+    useEffect(() => {
+        // add when mounted
+        document.addEventListener("mousedown", handleClick);
+        // return function to be called when unmounted
+        return () => {
+          document.removeEventListener("mousedown", handleClick);
+        };
+      }, []);
+
+    const handleClick = e => {
+        if(settingButtonNode.current.contains(e.target)){
+            // inside click
+            return;
+        }
+        else if(profileButtonNode.current.contains(e.target)){
+            // inside click
+            return;
+        }
+        else if (settingNode.current.contains(e.target)) {
+          // inside click
+          return;
+        }
+        else if (profileNode.current.contains(e.target)) {
+            // inside click
+            return;
+          }
+        // outside click 
+        // ... do whatever on click outside here ...
+        profileLinkToggle(true);
+        navLinkToggle(true);
+       
+      };
+
     return (
         <nav className="navigation_class gradient">
 
             {/* this is profile avatar */}
-            <div onClick={handleProfileLinkToggle} className="header-profile-toggle">
+            <div onClick={handleProfileLinkToggle} className="header-profile-toggle" ref={profileButtonNode}>
             <i ><img className="rounded-circle img-fluid border d-md-flex justify-content-md-center align-items-md-center" style={{width:"20px", height:"20px"}} src = {profileUrl}></img></i>
             </div>
 
-            <ul className={renderProfileClasses()}>
+            <ul className={renderProfileClasses()} ref={profileNode}>
                 <li className="profilelink">
                     <label  className="text-center d-lg-flex  justify-content-center justify-content-lg-center">{accountType}</label>    
                 </li>
@@ -98,7 +136,7 @@ function Header (props) {
 
             {/* This is profile controls */}
 
-            <ul className={renderClasses()}>
+            <ul className={renderClasses()} ref={settingNode}>
                 <li className="headerlink settings">
                     <div> 
                         Settings 
@@ -110,8 +148,12 @@ function Header (props) {
                 <li className="headerlink"><a className="ainheader" href={"#"} >Change Password</a></li>
                 <li className="headerlink"><a className="ainheader" href={"#"} >Logout</a></li>
                 <li className="headerlink hide"><a className="ainheader" href={"#"} ></a></li>
+                <li className="headerlink hide"><a className="ainheader" href={"#"} ></a></li>
+                <li className="headerlink hide"><a className="ainheader" href={"#"} ></a></li>
+                <li className="headerlink hide"><a className="ainheader" href={"#"} ></a></li>
+                <li className="headerlink hide"><a className="ainheader" href={"#"} ></a></li>
             </ul>
-            <div onClick={handleNavLinkToggle} className="header-hamburger-toggle">
+            <div onClick={handleNavLinkToggle} className="header-hamburger-toggle" ref={settingButtonNode}>
                 <i className="fas fa-bars fa-lg"></i>
             </div>
 

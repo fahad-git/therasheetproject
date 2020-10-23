@@ -10,7 +10,7 @@ function ClinicInfo(props) {
     var [clinicName, setClinicName] = useState(props.params[1]);
     var [ownerName, setOwnerName] = useState('Azhar');
     var [phoneNumber, setPhoneNumber] = useState('+923132534867');
-    var [facilityAddress, setFacilityAddress] = useState('Gareebabad Sukkur Gareebabad Sukkur Gareebabad Sukkur Gareebabad Sukkur');
+    var [facilityAddress, setFacilityAddress] = useState('Gareebabad Near Sufi Zaheer SUkkur');
     var [emailAddress, setEmailAddress] = useState('azhar@perfektsolution.com');
     var [registrationDate, setRegistrationDate] = useState('12/4/2020');
     var [subscriptionDate, setSubscriptionDate] = useState('15/5/2020');
@@ -24,16 +24,16 @@ function ClinicInfo(props) {
     const changeStatusHandler = (event)=>{
         event.preventDefault();
 
-
         // database Update query
 
-        if(accountStatusButton === 'Active'){
-            setAccountStatus("Disable");
-            setAccountStatusButton("Activate");
-        }
-        else{
+        if(accountStatusButton === "Activate"){
+            
             setAccountStatus("Active");
             setAccountStatusButton("Deactivate");
+            }
+        else{
+            setAccountStatus("Disabled");
+            setAccountStatusButton("Activate");
         }
     }
 
@@ -43,7 +43,7 @@ function ClinicInfo(props) {
                          <form onSubmit={changeStatusHandler}>
                             <div className="row no-gutters">
                                  <div className="col-5" ><label className="form-control" >Clinic Name</label></div>
-                                 <div className="col-7" style={{padding: "0px 10px"}}><input disabled={true} className="form-control"  type="text" placeholder={clinicName}/></div>
+                                 <div className="col-7" style={{padding: "0px 10px"}}><textarea disabled={true} rows="1" className="form-control" style={{resize: "none"}} type="text" placeholder={clinicName}/></div>
                              </div>
                              <div className="row no-gutters">
                                  <div className="col-5"><label className="form-control">Owner Name</label></div>
@@ -65,7 +65,7 @@ function ClinicInfo(props) {
 
                              <div className="row no-gutters">
                                  <div className="col-5"><label className="form-control">Email</label></div>
-                                 <div className="col-7" style={{padding: "0px 10px"}} ><input disabled={true}  className="form-control"  type="text" placeholder={emailAddress}/></div>
+                                 <div className="col-7" style={{padding: "0px 10px"}} ><textarea disabled={true} rows="1" className="form-control" style={{resize: "none"}} type="text" placeholder={emailAddress}/></div>
                              </div> 
 
                              <div className="row no-gutters">
