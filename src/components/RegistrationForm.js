@@ -358,9 +358,9 @@ function RegistrationForm(){
                                 </div>
 
                                 <div className="col-12 form-group ">
-                                    <div className="col-12 form-control">
-                                        <input className="col-8 col-md-9 col-lg-10 passwordfield" type={ (password_eye_icon=== "ion-eye") ? "password" : "text"} name="password" placeholder="Password" onChange = {updatePassword} />
-                                        <i className="col-4 col-md-3 col-lg-2" className={password_eye_icon} onClick={togglePassword} ></i>
+                                    <div className="col-12 form-control" style={{padding: "20px 0px"}}>
+                                        <input className="col-9 col-md-9 col-lg-10 passwordfield" type={ (password_eye_icon=== "ion-eye") ? "password" : "text"} name="password" placeholder="Password" onChange = {updatePassword} />
+                                        <i className="col-3 col-md-3 col-lg-2" className={password_eye_icon} onClick={togglePassword} ></i>
                                     </div>
                                 </div>
                                 <div className="col-12 form-group">

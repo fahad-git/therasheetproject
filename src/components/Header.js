@@ -1,4 +1,5 @@
 import React, {useState, useRef, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import '../assets/bootstrap/css/bbootstrap.min.css';
 import '../assets/bootstrap/css/bootstrap.min.css';
@@ -8,6 +9,8 @@ import logo from '../assets/img/btnimg.png';
 
 
 function Header (props) {
+
+    const history = useHistory();
 
     const [navLinkOpen, navLinkToggle] = useState(true);
     const [profileLinkOpen, profileLinkToggle] = useState(true);
@@ -32,7 +35,8 @@ function Header (props) {
         alert("working");
     }
     const logoutHandler = () =>{
-        alert("logout");
+        // alert("logout");
+        history.push('/home');
     }
 
     const handleProfileLinkToggle = () => {

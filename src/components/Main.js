@@ -5,6 +5,7 @@ import About from './About';
 import Services from './Services';
 import Contact from './Contact';
 import Admin from './Admin';
+import ClicicDirector from './ClinicDirector';
 
 
 function Main (props) {
@@ -17,6 +18,7 @@ function Main (props) {
             <Route path='/services' component={Services} />
             <Route path='/contact' component={Contact} />
             <Route path='/admin' component={Admin} />
+            <Route path='/director' component={ClicicDirector} />
 
             {/* <Route path='/clinician' component={ClinicianDashboard} /> */}
             {/* <Route path='/patient' component={NewPatient} /> */}
