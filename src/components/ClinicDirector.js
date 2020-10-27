@@ -12,8 +12,9 @@ import blocked_clinic_icon from '../assets/img/clinic_icon.png';
 
 
 import ClinicianInfo from './ClinicianInfo';
-import AdminInfo from './AdminInfo';
 import ChangePassword from './ChangePassword';
+import ClinicDirectorInfo from './ClinicDirectorInfo';
+import AddNewClinician from './AddNewClinician';
 
 
 function ClinicDirector () {
@@ -24,8 +25,6 @@ function ClinicDirector () {
         "clinicname":"clinician1",
         "username":"User1",
         "status":"Active",
-        "dis":"block",
-    
         };
 
     let clinician2 = {
@@ -78,19 +77,20 @@ function ClinicDirector () {
     var [directorName, setDirectorName] = useState('John');
     var [userName, setUserName] = useState('johntherasheet');
     var [profileURL, setProfileURL] = useState('');
-    var [cliniciaInformation, setCliniciaInformation] = useState(elems);
+    var [clinicianInformation, setClinicianInformation] = useState(elems);
     var [params, setParams] = useState([]);
     var [background_color, setBackground_color] = useState("rgba(4, 13, 43, 0.8)");
     var [isClinicianInfoOpen, clinicianInfoToggle] = useState(false);
     var [isAccountInfoOpen, accountInfoToggle] = useState(false);
     var [isPasswordChange, passwordChangeToggle] = useState(false);
-
+    var [isAddNewClinicianOpen, addNewClinicianToggle] = useState(false);
 
     const addClinicHandler = () =>{
         // alert("New Clinic Will be Added")
         setParams([userName]);
         // passwordChangeToggle(true);
-        accountInfoToggle(true);
+        // accountInfoToggle(true);
+        addNewClinicianToggle(true);
     }
     
 
@@ -99,14 +99,14 @@ function ClinicDirector () {
         
         switch(value){
             case "Blocked Clinics":
-                setCliniciaInformation(blocked_clinic);
+                setClinicianInformation(blocked_clinic);
             break;
 
             case "Active Clinics":
-                setCliniciaInformation(active_clinic)
+                setClinicianInformation(active_clinic)
             break;
             default:
-                setCliniciaInformation(elems);
+                setClinicianInformation(elems);
             break;
         }
     }
@@ -121,7 +121,7 @@ function ClinicDirector () {
     return <div className="admin">
                     
             {/* ***************************************** Modals ****************************** */}
-                {/* Modal 1 this modal is for Clinic Info*/}
+                {/* Modal 1 this modal is for Clinician Info*/}
                 <Modal show={isClinicianInfoOpen}
                     onHide = {()=> clinicianInfoToggle(false)}
                     size="md"
@@ -136,7 +136,7 @@ function ClinicDirector () {
                     </Modal.Body>
                 </Modal>
 
-                {/* Modal 2 this modal is for Admin Info*/}
+                {/* Modal 2 this modal is for Clinic Director Info*/}
                 <Modal show={isAccountInfoOpen}
                     onHide = {()=> accountInfoToggle(false)}
                     size="md"
@@ -147,11 +147,11 @@ function ClinicDirector () {
                         <h2 className="text-center" style={{color:modalHeaderColor}}><strong>Director Information</strong></h2>
                     </Modal.Header>
                     <Modal.Body>
-                        {<AdminInfo params={params}/>}
+                        {<ClinicDirectorInfo params={params}/>}
                     </Modal.Body>
                 </Modal>
 
-                {/* Modal 3 this modal is for Admin Password Change*/}
+                {/* Modal 3 this modal is for Director Password Change*/}
                 <Modal show={isPasswordChange}
                     onHide = {()=> passwordChangeToggle(false)}
                     size="md"
@@ -166,11 +166,26 @@ function ClinicDirector () {
                     </Modal.Body>
                 </Modal>
 
+                {/* Modal 4 this modal is for Add New Clinician*/}
+                <Modal show={isAddNewClinicianOpen}
+                    onHide = {()=> addNewClinicianToggle(false)}
+                    size="md"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                    >
+                    <Modal.Header closeButton>
+                        <h3 className="text-center" style={{color:background_color}}><strong>Add New Clinician</strong></h3>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {<AddNewClinician />}
+                    </Modal.Body>
+                </Modal>
+
             <div className="container">
                 <div className="row" >
                     <div className="col-12 offset-0" >
                         {/* this is add new patient button  */}
-                        <button className="btn btn-primary text-left float-right" style={{backgroundColor:background_color}} onClick={addClinicHandler} >Add New Clinic</button>
+                        <button className="btn btn-primary text-left float-right" style={{backgroundColor:background_color}} onClick={addClinicHandler} >Add New Clinician</button>
                     </div>
                 </div>
 
@@ -190,7 +205,7 @@ function ClinicDirector () {
 
                             <div className="row justify-content-center align-items-center top-buffer">
                                 <div className="col-12">
-                                    {cliniciaInformation.map( ({clinicname, username, status}, index)=>{
+                                    {clinicianInformation.map( ({clinicname, username, status}, index)=>{
                                     return (
                                             <div key={index} className="col-6 col-sm-4 col-md-3 col-lg-2 offset-0" style={{float:"left", marginTop:"20px"}} onClick={() => clinicInfoHandler(username, clinicname)}>
                                                 <div className="card tile" >

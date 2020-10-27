@@ -37,6 +37,7 @@ function AdminInfo(props){
 
             setStatus("Profile Updated");
             disableFieldsToggle(true);
+            setPassword(["none",""]);
             setAccountStatusButton("Edit");
         }
     }

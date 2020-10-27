@@ -101,7 +101,7 @@ function ChangePassword(props){
                                 <div className="col-5"><label className="form-control">Old Password</label></div>
                                 <div className="col-7" style={{padding: "0px 10px"}}>
                                     <div className="form-control">
-                                        <input className="col-9 col-sm-10" style={{border:"0px", outline:"none", padding:"0px 0px", background:"#f7f9fc"}}  onBlur={verifyOldPassword} onFocus={()=> setOldPasswordErrorMessage(["none",""])} type={ (old_password_eye_icon=== "ion-eye") ? "password" : "text"} onChange={updateOldPassword}/>
+                                        <input className="col-9 col-sm-10" style={{border:"0px", outline:"none", padding:"0px 0px", background:"#f7f9fc", color: "inherit"}}  onBlur={verifyOldPassword} onFocus={()=> setOldPasswordErrorMessage(["none",""])} type={ (old_password_eye_icon=== "ion-eye") ? "password" : "text"} onChange={updateOldPassword}/>
                                         {/* "ion-eye" "ion-eye-disabled" */}
                                         <i className="col-3" className={old_password_eye_icon} onClick={toggleOldPassword} ></i>
                                     </div>
@@ -117,7 +117,7 @@ function ChangePassword(props){
                                 <div className="col-5"><label className="form-control">New Password</label></div>
                                 <div className="col-7" style={{padding: "0px 10px"}}>
                                     <div className="form-control">
-                                        <input className="col-9 col-sm-10" style={{border:"0px", outline:"none", padding:"0px 0px", background:"#f7f9fc"}} onBlur={verifyNewPassword} onFocus={()=> setNewPasswordErrorMessage(["none",""])} type={ (new_password_eye_icon=== "ion-eye") ? "password" : "text"} onChange={updateNewPassword}/>
+                                        <input className="col-9 col-sm-10" style={{border:"0px", outline:"none", padding:"0px 0px", background:"#f7f9fc", color: "inherit"}} onBlur={verifyNewPassword} onFocus={()=> setNewPasswordErrorMessage(["none",""])} type={ (new_password_eye_icon=== "ion-eye") ? "password" : "text"} onChange={updateNewPassword}/>
                                         <i className= "col-3" className={new_password_eye_icon} onClick={toggleNewPassword} ></i>
                                     </div>
                                 </div>
@@ -132,7 +132,7 @@ function ChangePassword(props){
                                 <div className="col-5"><label className="form-control">Confirm Password</label></div>
                                 <div className="col-7" style={{padding: "0px 10px"}}>
                                     <div className="form-control">
-                                        <input style={{border:"0px", outline:"none", padding:"0px 0px", background:"#f7f9fc"}} onBlur={verifyConfirmPassword} onFocus={()=> setConfirmPasswordErrorMessage(["none",""])}  type="password" onChange={updateConfirmPassword}/></div>
+                                        <input style={{border:"0px", outline:"none", padding:"0px 0px", background:"#f7f9fc", color: "inherit"}} onBlur={verifyConfirmPassword} onFocus={()=> setConfirmPasswordErrorMessage(["none",""])}  type="password" onChange={updateConfirmPassword}/></div>
                                     </div>
                             </div>
 
