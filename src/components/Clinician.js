@@ -5,20 +5,36 @@ import {DatePickerInput } from 'rc-datepicker';
 import 'rc-datepicker/lib/style.css';
 import '../assets/bootstrap/css/bootstrap.min.css';
 import '../assets/css/Admin.css';
+import '../assets/css/Clinician.css';
 
 import {Modal} from 'react-bootstrap';
-
-import active_patients_icon from '../assets/img/clinic_icon_white.png';
-import all_patients_icon from '../assets/img/clinic_icon.png';
+import { useSelector, useDispatch } from 'react-redux';
 
 
-// import ClinicianInfo from './ClinicianInfo';
+import active_patient_icon from '../assets/img/active_patient_icon.png';
+import all_patient_icon from '../assets/img/all_patient_icon.png';
+
+
+import PatientInfo from './PatientInfo';
 import ChangePassword from './ChangePassword';
-// import ClinicDirectorInfo from './ClinicDirectorInfo';
-// import AddNewClinician from './AddNewClinician';
+import AddNewPatient from './AddNewPatient';
+import ClinicianAccountInfo from './ClinicianAccountInfo';
 
 
-function Clinician () {
+import { CLINICIAN_PROFILE_INFO_MODAL_CLOSE, CLINICIAN_PASSWORD_MODAL_CLOSE } from "../constants/modal";
+
+
+function Clinician (props) {
+
+    var setHeaderComponent = props.setHeaderComponent;
+    setHeaderComponent(false);
+
+    // const [setAccountUsername, setAccountType, setAccountProfileUrl] = props.userDetails;
+    // setAccountUsername("Sarah");
+    // setAccountType("Clinician");
+    // setAccountProfileUrl("https://www.unitex.com/wp-content/uploads/2018/04/Unitex-Nursing-Shortage-1.jpg");
+
+
 
     // Accessing data
 
@@ -69,13 +85,17 @@ function Clinician () {
     const active_patients = [patient1, patient2, patient4, patient5, patient7]; 
     const all_patients = [patient1,  patient2, patient3, patient4, patient5, patient6, patient7];
         
+    const dispatch = useDispatch();
 
     const modalHeaderColor = "rgba(4, 13, 43, 0.8)";
+
+    const {isClinicianAccountInfoOpen} = useSelector((state) => state.modalReducer);
+    const {isClinicianPasswordChange} = useSelector((state) => state.modalReducer);
 
     const history = useHistory(); 
     
     var today = new Date();
-    var dd = String(today.getDate())
+    var dd = String(today.getDate());
 
     var [clinicianName, setClinicianName] = useState('John');
     var [userName, setUserName] = useState('johntherasheet');
@@ -84,10 +104,26 @@ function Clinician () {
     var [params, setParams] = useState([]);
     var [background_color, setBackground_color] = useState("rgba(4, 13, 43, 0.8)");
     var [isPatientInfoOpen, patientInfoToggle] = useState(false);
-    var [isAccountInfoOpen, accountInfoToggle] = useState(false);
-    var [isPasswordChange, passwordChangeToggle] = useState(false);
+    // var [isAccountInfoOpen, accountInfoToggle] = useState(false);
+    // var [isPasswordChange, passwordChangeToggle] = useState(false);
     var [isAddNewPatientOpen, addNewPatientToggle] = useState(false);
-    var [selectedDate, setSelectedDate] = useState(dd);
+    var [selectedDate, setSelectedDate] = useState({dd});
+
+
+    const accountInfoToggle = () => {
+        dispatch({
+            type: CLINICIAN_PROFILE_INFO_MODAL_CLOSE,
+            isClinicianAccountInfoOpen: false
+        });
+    }
+
+    const passwordChangeToggle = () => {
+        dispatch({
+            type: CLINICIAN_PASSWORD_MODAL_CLOSE,
+            isClinicianPasswordChange: false
+        });
+    }
+
 
     const addPatientHandler = () =>{
         // alert("New Clinic Will be Added")
@@ -117,7 +153,7 @@ function Clinician () {
 
     const patientInfoHandler = (username, patientname) =>{
         setParams([username, patientname])
-        patientInfoToggle(true);
+        patientInfoToggle(true);        
     }
 
 
@@ -152,28 +188,28 @@ function Clinician () {
                         <h2 className="text-center" style={{color:modalHeaderColor}}><strong>Patient Information</strong></h2>
                     </Modal.Header>
                     <Modal.Body>
-                        {/* {<PatientInfo params={params}/>} */}
+                        {<PatientInfo params={params}/>}
                     </Modal.Body>
                 </Modal>
 
                 {/* Modal 2 this modal is for Clinic Director Info*/}
-                <Modal show={isAccountInfoOpen}
-                    onHide = {()=> accountInfoToggle(false)}
+                <Modal show={isClinicianAccountInfoOpen}
+                    onHide = {accountInfoToggle}
                     size="md"
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
                     >
                     <Modal.Header closeButton>
-                        <h2 className="text-center" style={{color:modalHeaderColor}}><strong>Director Information</strong></h2>
+                        <h2 className="text-center" style={{color:modalHeaderColor}}><strong>Clinician Information</strong></h2>
                     </Modal.Header>
                     <Modal.Body>
-                        {/* {<ClinicDirectorInfo params={params}/>} */}
+                        {<ClinicianAccountInfo params={params}/>}
                     </Modal.Body>
                 </Modal>
 
                 {/* Modal 3 this modal is for Clinician Password Change*/}
-                <Modal show={isPasswordChange}
-                    onHide = {()=> passwordChangeToggle(false)}
+                <Modal show={isClinicianPasswordChange}
+                    onHide = {passwordChangeToggle}
                     size="md"
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
@@ -197,7 +233,7 @@ function Clinician () {
                         <h3 className="text-center" style={{color:background_color}}><strong>Add New Patient</strong></h3>
                     </Modal.Header>
                     <Modal.Body>
-                        {/* {<AddNewPatient />} */}
+                        {<AddNewPatient />}
                     </Modal.Body>
                 </Modal>
 
@@ -217,28 +253,28 @@ function Clinician () {
                                 <div className="dropdown">
                                     <select className="btn btn-primary dropdown-toggle" type="button" onChange={patientSelectHandler} style={{backgroundColor:background_color, maxWidth: "200px", width:"200px", maxHeight: "70px", height:"40px", border:"0px", outline:"none", fontSize:"16px"}}>
                                         <option className="dropoptions" value="Today's Patients">Today's Patients</option>   
-                                        <option className="dropoptions" value="Today's All Patients">Today's All Patients</option>
+                                        <option className="dropoptions" value="Today's All Patients">All Patients</option>
                                     </select>
                                 </div>
                             </div>
 
 
-                            <div style={{float:"right", marginTop:"10px"}}>
+                            <div className="col-12 col-sm-8 offset-sm-4 col-md-6 offset-md-6 col-lg-4 offset-lg-8" style={{float:"right", marginTop:"10px"}}>
                                 {/* // this renders the full component (input and datepicker) */}
                                 <DatePickerInput
                                 onChange={onchange}
-                                value={selectedDate}
+                                value={today}
                                 className='my-custom-datepicker-component'
                                 />
                             </div>
 
-                            <div className="row justify-content-center align-items-center top-buffer">
+                            <div className="row justify-content-center align-items-center top-buffer" style={{marginTop:"100px"}}>
                                 <div className="col-12">
                                     {patientInformation.map( ({patientname, username, status}, index)=>{
                                     return (
                                             <div key={index} className="col-6 col-sm-4 col-md-3 col-lg-2 offset-0" style={{float:"left", marginTop:"20px"}} onClick={() => patientInfoHandler(username, patientname)}>
                                                 <div className="card tile" >
-                                                    <img alt="Not found" className="clinicicon" src={(status === "Active") ? active_patients_icon : all_patients_icon} />
+                                                    <img alt="Not found" className="clinicicon" src={(status === "Active") ? active_patient_icon : all_patient_icon} />
                                                 </div>                                                                  
                                                 <label className="card align-text-center" style={{textAlign:"center"}}>{patientname}</label>                                               
                                             </div>

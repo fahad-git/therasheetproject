@@ -1,9 +1,12 @@
-import React, {useState} from 'react'
+import React, {useState} from 'react';
 import {useHistory} from 'react-router-dom';
-import '../assets/bootstrap/css/bootstrap.min.css'
-import '../assets/fonts/ionicons.min.css'
-import '../assets/css/LoginForm.css'
+import { useSelector, useDispatch } from 'react-redux';
 
+import '../assets/bootstrap/css/bootstrap.min.css';
+import '../assets/fonts/ionicons.min.css';
+import '../assets/css/LoginForm.css';
+
+import { USER_ACCOUNT_TYPE } from "../constants/user";
 
 
 function LoginForm() {
@@ -15,6 +18,12 @@ function LoginForm() {
 
     const updateUserName = (e) => setUserName(e.target.value);
     const updatePassword = (e) => setPassword(e.target.value)
+
+
+    const dispatch = useDispatch();
+
+    const { account_username, account_type, account_profile_url } = useSelector( (state) => state.userReducer );
+
 
     const validateFormData = (event) => {
         event.preventDefault();
@@ -38,10 +47,48 @@ function LoginForm() {
         // this hashedPassword will be used for varification.
 
         if(userName === "admin" && password === "admin"){
+
+            localStorage.removeItem("user");
+            localStorage.setItem("user", JSON.stringify({
+                userName: "John",
+                accountType: "Admin",
+                accountProfileUrl: "https://thumbs.dreamstime.com/b/asian-male-doctor-man-indian-wearing-white-coat-shirt-tie-stethoscope-pictured-hospital-30888074.jpg"
+            }));
+        
             history.push('/admin');
         }else if(userName === "director" && password === "director"){
+            // dispatch(
+            //     {
+            //         type: USER_ACCOUNT_TYPE,
+            //         account_username: "Mike",
+            //         account_type: "Director",
+            //         account_profile_url: "https://img.freepik.com/free-psd/confident-young-doctor-posing_1459-5943.jpg?size=626&ext=jpg"
+            //     }
+            // );
+
+            localStorage.removeItem("user");
+            localStorage.setItem("user", JSON.stringify({
+                userName: "Mike",
+                accountType: "Director",
+                accountProfileUrl: "https://img.freepik.com/free-psd/confident-young-doctor-posing_1459-5943.jpg?size=626&ext=jpg"
+            }));
+
             history.push('/director');
         }else if(userName === "clinician1" && password === "clinician1"){
+            // dispatch(
+            //     {
+            //         type: USER_ACCOUNT_TYPE,
+            //         account_username: "Sarah",
+            //         account_type: "Clinician",
+            //         account_profile_url: "https://www.unitex.com/wp-content/uploads/2018/04/Unitex-Nursing-Shortage-1.jpg"
+            //     }
+            // );
+            localStorage.removeItem("user");
+            localStorage.setItem("user", JSON.stringify({
+                userName: "Sarah",
+                accountType: "Clinician",
+                accountProfileUrl: "https://www.unitex.com/wp-content/uploads/2018/04/Unitex-Nursing-Shortage-1.jpg"
+            }));
             history.push('/clinician');
         }
     }

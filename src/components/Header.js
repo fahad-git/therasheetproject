@@ -1,16 +1,24 @@
 import React, {useState, useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import '../assets/bootstrap/css/bbootstrap.min.css';
 import '../assets/bootstrap/css/bootstrap.min.css';
 import '../assets/css/Header.css';
 
-import logo from '../assets/img/btnimg.png';
+import logo from '../assets/img/therasheet_logo.png';
+
+import {ADMIN_PASSWORD_MODAL_OPEN, ADMIN_PROFILE_INFO_MODAL_OPEN} from "../constants/modal";
+
+import { DIRECTOR_PROFILE_INFO_MODAL_OPEN, DIRECTOR_PASSWORD_MODAL_OPEN } from "../constants/modal";
+
+import { CLINICIAN_PROFILE_INFO_MODAL_OPEN, CLINICIAN_PASSWORD_MODAL_OPEN } from "../constants/modal";
 
 
 function Header (props) {
 
     const history = useHistory();
+    const dispatch = useDispatch();
 
     const [navLinkOpen, navLinkToggle] = useState(true);
     const [profileLinkOpen, profileLinkToggle] = useState(true);
@@ -21,21 +29,88 @@ function Header (props) {
     const profileButtonNode = useRef();
 
     // username and account type will be passed to this component.
-    var [userName, setUsername] = useState(props.userName);
-    var [accountType, setType] = useState(props.accountType);
-    var [profileUrl, setProfileUrl] = useState(props.profile_url);
-
-
+    // var [userName, setUsername] = useState(props.userName);
+    // var [accountType, setType] = useState(props.accountType);
+    // var [profileUrl, setProfileUrl] = useState(props.profile_url);
     // const profileUrl = "https://www.unitex.com/wp-content/uploads/2018/04/Unitex-Nursing-Shortage-1.jpg";
     
+
+    const { isClinicInfoOpen } = useSelector((state) => state.modalReducer);
+    const { isPasswordChange } = useSelector((state) => state.modalReducer);
+    const [accountType, setAccountType] = useState();
+    const [accountProfileUrl, setAccountProfileUrl] = useState();
+    const [userName, setUserName] = useState();
+
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    useEffect(() => {
+
+        if(user) {
+            setAccountType(user.accountType);
+            setAccountProfileUrl(user.accountProfileUrl);
+            setUserName(user.userName);
+        }
+
+    },[user]);
+
     const profileInfoHandler = () => {
-        alert("working");
+        switch(accountType){
+            case "Admin": 
+                dispatch({
+                    type: ADMIN_PROFILE_INFO_MODAL_OPEN,
+                    isAccountInfoOpen: true
+                });
+            break;
+
+            case "Director": 
+                dispatch({
+                    type: DIRECTOR_PROFILE_INFO_MODAL_OPEN,
+                    isDirectorAccountInfoOpen: true
+                    });
+            break;
+
+            case "Clinician": 
+                dispatch({
+                    type: CLINICIAN_PROFILE_INFO_MODAL_OPEN,
+                    isClinicianAccountInfoOpen: true
+                });
+            break;
+        }
     }
+
     const changePasswordHandler = () => {
-        alert("working");
+        switch(accountType){
+            case "Admin": 
+                dispatch({
+                    type: ADMIN_PASSWORD_MODAL_OPEN,
+                    isPasswordChange: true
+                });
+            break;
+
+            case "Director": 
+                dispatch({
+                    type: DIRECTOR_PASSWORD_MODAL_OPEN,
+                    isDirectorPasswordChange: true
+                    });
+            break;
+
+            case "Clinician": 
+                dispatch({
+                    type: CLINICIAN_PASSWORD_MODAL_OPEN,
+                    isClinicianPasswordChange: true
+                });
+            break;
+        }
+
+
     }
+    
     const logoutHandler = () =>{
         // alert("logout");
+        localStorage.removeItem("user");
+        // dispatch({
+        //     type: "LOGOUT"
+        // });
         history.push('/home');
     }
 
@@ -106,7 +181,7 @@ function Header (props) {
 
             {/* this is profile avatar */}
             <div onClick={handleProfileLinkToggle} className="header-profile-toggle" ref={profileButtonNode}>
-            <i ><img className="rounded-circle img-fluid border d-md-flex justify-content-md-center align-items-md-center" style={{width:"20px", height:"20px"}} src = {profileUrl}></img></i>
+            <i ><img className="rounded-circle img-fluid border d-md-flex justify-content-md-center align-items-md-center" style={{width:"20px", height:"20px"}} src = {accountProfileUrl}></img></i>
             </div>
 
             <ul className={renderProfileClasses()} ref={profileNode}>
@@ -115,7 +190,7 @@ function Header (props) {
                 </li>
                 <hr/>
                 <li className="profilelink" style={{padding: "20px 20px"}}>
-                    <img  className="rounded-circle img-fluid border d-md-flex justify-content-md-center align-items-md-center" src = { profileUrl }></img>
+                    <img  className="rounded-circle img-fluid border d-md-flex justify-content-md-center align-items-md-center" src = { accountProfileUrl }></img>
                 </li>
 
                 <li className="profilelink">
@@ -125,8 +200,8 @@ function Header (props) {
             </ul>
 
             <div className="headerlogo">
-                <i><img src={logo} /></i>
-                <h4>Therasheet</h4>
+                <i><img src={logo} style={{width:"50px", height:"50px"}} /></i>
+                <h3>Therasheet</h3>
             </div>
 
             {/* This is profile controls */}

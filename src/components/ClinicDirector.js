@@ -5,10 +5,10 @@ import '../assets/bootstrap/css/bootstrap.min.css';
 import '../assets/css/Admin.css';
 
 import {Modal} from 'react-bootstrap';
+import { useSelector, useDispatch } from 'react-redux';
 
-
-import active_clinic_icon from '../assets/img/clinic_icon_white.png';
-import blocked_clinic_icon from '../assets/img/clinic_icon.png';
+import active_clinician_icon from '../assets/img/active_clinician_icon.png';
+import blocked_clinician_icon from '../assets/img/blocked_clinician_icon.png';
 
 
 import ClinicianInfo from './ClinicianInfo';
@@ -16,8 +16,20 @@ import ChangePassword from './ChangePassword';
 import ClinicDirectorInfo from './ClinicDirectorInfo';
 import AddNewClinician from './AddNewClinician';
 
+import { DIRECTOR_PROFILE_INFO_MODAL_CLOSE, DIRECTOR_PASSWORD_MODAL_CLOSE } from "../constants/modal";
 
-function ClinicDirector () {
+
+function ClinicDirector (props) {
+
+    var setHeaderComponent = props.setHeaderComponent;
+    setHeaderComponent(false);
+
+    // const [setAccountUsername, setAccountType, setAccountProfileUrl] = props.userDetails;
+    // setAccountUsername("Mike");
+    // setAccountType("Director");
+    // setAccountProfileUrl("https://img.freepik.com/free-psd/confident-young-doctor-posing_1459-5943.jpg?size=626&ext=jpg");
+
+
 
     // Accessing data
 
@@ -72,7 +84,8 @@ function ClinicDirector () {
 
     const modalHeaderColor = "rgba(4, 13, 43, 0.8)";
 
-    const history = useHistory();   
+    const history = useHistory(); 
+    const dispatch = useDispatch();  
 
     var [directorName, setDirectorName] = useState('John');
     var [userName, setUserName] = useState('johntherasheet');
@@ -81,9 +94,26 @@ function ClinicDirector () {
     var [params, setParams] = useState([]);
     var [background_color, setBackground_color] = useState("rgba(4, 13, 43, 0.8)");
     var [isClinicianInfoOpen, clinicianInfoToggle] = useState(false);
-    var [isAccountInfoOpen, accountInfoToggle] = useState(false);
-    var [isPasswordChange, passwordChangeToggle] = useState(false);
+    // var [isAccountInfoOpen, accountInfoToggle] = useState(false);
+    // var [isPasswordChange, passwordChangeToggle] = useState(false);
     var [isAddNewClinicianOpen, addNewClinicianToggle] = useState(false);
+
+    const {isDirectorAccountInfoOpen} = useSelector((state) => state.modalReducer);
+    const {isDirectorPasswordChange} = useSelector((state) => state.modalReducer);
+
+    const accountInfoToggle = () => {
+        dispatch({
+            type: DIRECTOR_PROFILE_INFO_MODAL_CLOSE,
+            isDirectorAccountInfoOpen: false
+        });
+    }
+
+    const passwordChangeToggle = () => {
+        dispatch({
+            type: DIRECTOR_PASSWORD_MODAL_CLOSE,
+            isDirectorPasswordChange: false
+        });
+    }
 
     const addClinicHandler = () =>{
         // alert("New Clinic Will be Added")
@@ -137,8 +167,8 @@ function ClinicDirector () {
                 </Modal>
 
                 {/* Modal 2 this modal is for Clinic Director Info*/}
-                <Modal show={isAccountInfoOpen}
-                    onHide = {()=> accountInfoToggle(false)}
+                <Modal show={isDirectorAccountInfoOpen}
+                    onHide = {accountInfoToggle}
                     size="md"
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
@@ -152,8 +182,8 @@ function ClinicDirector () {
                 </Modal>
 
                 {/* Modal 3 this modal is for Director Password Change*/}
-                <Modal show={isPasswordChange}
-                    onHide = {()=> passwordChangeToggle(false)}
+                <Modal show={isDirectorPasswordChange}
+                    onHide = {passwordChangeToggle}
                     size="md"
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
@@ -209,7 +239,7 @@ function ClinicDirector () {
                                     return (
                                             <div key={index} className="col-6 col-sm-4 col-md-3 col-lg-2 offset-0" style={{float:"left", marginTop:"20px"}} onClick={() => clinicInfoHandler(username, clinicname)}>
                                                 <div className="card tile" >
-                                                    <img alt="Not found" className="clinicicon" src={(status === "Active") ? active_clinic_icon : blocked_clinic_icon} />
+                                                    <img alt="Not found" className="clinicicon" src={(status === "Active") ? active_clinician_icon : blocked_clinician_icon} />
                                                 </div>                                                                  
                                                 <label className="card align-text-center" style={{textAlign:"center"}}>{clinicname}</label>                                               
                                             </div>

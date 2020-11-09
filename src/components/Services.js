@@ -1,6 +1,9 @@
 import React from 'react';
 
-function Services(){
+function Services(props){
+
+    var setHeaderComponent = props.setHeaderComponent;
+    setHeaderComponent(true);
 
     return  <div>
                 <div className="services">

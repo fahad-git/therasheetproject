@@ -7,7 +7,10 @@ import {Modal} from 'react-bootstrap';
 import RegistrationForm from './RegistrationForm';
 import LoginForm from './LoginForm';
 
-function Home(){
+function Home(props){
+
+    var setHeaderComponent = props.setHeaderComponent;
+    setHeaderComponent(true);
 
     // const history = useHistory();
     var [isRegistrationFormModalOpen, toggleRegistrationFormModal] = useState(false);

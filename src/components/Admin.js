@@ -6,17 +6,27 @@ import '../assets/css/Admin.css';
 
 import {Modal} from 'react-bootstrap';
 
-
-import active_clinic_icon from '../assets/img/clinic_icon_white.png';
-import blocked_clinic_icon from '../assets/img/clinic_icon.png';
+import active_clinic_icon from '../assets/img/active_clinic_icon.png';
+import blocked_clinic_icon from '../assets/img/blocked_clinic_icon.png';
 
 
 import ClinicInfo from './ClinicInfo';
 import AdminInfo from './AdminInfo';
 import ChangePassword from './ChangePassword';
+import {ADMIN_PASSWORD_MODAL_CLOSE, ADMIN_PROFILE_INFO_MODAL_CLOSE } from '../constants/modal';
+import { useSelector, useDispatch } from 'react-redux';
 
 
-function Admin () {
+function Admin (props) {
+
+
+    var setHeaderComponent = props.setHeaderComponent;
+    setHeaderComponent(false);
+
+    // const [setAccountUsername, setAccountType, setAccountProfileUrl] = props.userDetails;
+    // setAccountUsername("John");
+    // setAccountType("Admin");
+    // setAccountProfileUrl("https://thumbs.dreamstime.com/b/asian-male-doctor-man-indian-wearing-white-coat-shirt-tie-stethoscope-pictured-hospital-30888074.jpg");
 
     // Accessing data
 
@@ -75,6 +85,8 @@ function Admin () {
 
     const history = useHistory();   
 
+    const dispatch = useDispatch();
+
     var [adminName, setAdminName] = useState('John');
     var [userName, setUserName] = useState('johntherasheet');
     var [profileURL, setProfileURL] = useState('');
@@ -82,15 +94,35 @@ function Admin () {
     var [params, setParams] = useState([]);
     var [background_color, setBackground_color] = useState("rgba(4, 13, 43, 0.8)");
     var [isClinicInfoOpen, clinicInfoToggle] = useState(false);
-    var [isAccountInfoOpen, accountInfoToggle] = useState(false);
-    var [isPasswordChange, passwordChangeToggle] = useState(false);
+    // var [isAccountInfoOpen, accountInfoToggle] = useState(false);
+    // var [isPasswordChange, passwordChangeToggle] = useState(false);
 
+
+    // const {isClinicInfoOpen} = useSelector((state) => state.modalReducer);
+    const {isAccountInfoOpen} = useSelector((state) => state.modalReducer);
+    const {isPasswordChange} = useSelector((state) => state.modalReducer);
+
+
+    const passwordChangeToggle = () => {
+        dispatch({
+            type: ADMIN_PASSWORD_MODAL_CLOSE,
+            isPasswordChange: false
+        });
+    }
+
+    const accountInfoToggle = () => {
+        dispatch({
+            type: ADMIN_PROFILE_INFO_MODAL_CLOSE,
+            isAccountInfoOpen: false
+        });
+    }
 
     const addClinicHandler = () =>{
-        // alert("New Clinic Will be Added")
-        setParams([userName]);
+        alert("New Clinic Will be Added")
+        // setParams([userName]);
         // passwordChangeToggle(true);
-        accountInfoToggle(true);
+        // accountInfoToggle(true);
+
     }
     
 
@@ -123,7 +155,7 @@ function Admin () {
             {/* ***************************************** Modals ****************************** */}
                 {/* Modal 1 this modal is for Clinic Info*/}
                 <Modal show={isClinicInfoOpen}
-                    onHide = {()=> clinicInfoToggle(false)}
+                    onHide = { () => clinicInfoToggle(false)}
                     size="md"
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
@@ -138,7 +170,7 @@ function Admin () {
 
                 {/* Modal 2 this modal is for Admin Info*/}
                 <Modal show={isAccountInfoOpen}
-                    onHide = {()=> accountInfoToggle(false)}
+                    onHide = {accountInfoToggle}
                     size="md"
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
@@ -153,7 +185,7 @@ function Admin () {
 
                 {/* Modal 3 this modal is for Admin Password Change*/}
                 <Modal show={isPasswordChange}
-                    onHide = {()=> passwordChangeToggle(false)}
+                    onHide = {passwordChangeToggle}
                     size="md"
                     aria-labelledby="contained-modal-title-vcenter"
                     centered

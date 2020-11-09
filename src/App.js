@@ -11,14 +11,21 @@ function App() {
   
   var [headerComponent, setHeaderComponent] = useState(false);
 
-  const profile_url = "https://www.unitex.com/wp-content/uploads/2018/04/Unitex-Nursing-Shortage-1.jpg"
+
+
+  var [userName, setAccountUsername] = useState("");
+  var [accountType, setAccountType] = useState("");
+  var [profileUrl, setAccountProfileUrl] = useState("");
+
+
+  const userDetails = [setAccountUsername, setAccountType, setAccountProfileUrl];
 
   return (
         <BrowserRouter>
           <div>
-            { headerComponent ?  <Navbar /> : <Header  userName="Sarah" accountType="Clinician" profile_url = {profile_url} />}
+            { headerComponent ?  <Navbar /> : <Header userName={userName} accountType={accountType} profile_url = {profileUrl} />}
               {/* <Header  userName="Sarah" accountType="Admin" profile_url = {profile_url} /> */}
-            <Main headerComponent={headerComponent}/>
+            <Main setHeaderComponent={setHeaderComponent} userDetails= {userDetails}/>
           </div>
         </BrowserRouter>
   );

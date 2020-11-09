@@ -3,7 +3,10 @@ import '../assets/bootstrap/css/bootstrap.min.css';
 
 import './../assets/css/BasicComponents.css';
 
-function About(){
+function About(props){
+
+    var setHeaderComponent = props.setHeaderComponent;
+    setHeaderComponent(true);
 
     return  <div>
                 <div className="about">

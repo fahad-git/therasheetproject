@@ -1,0 +1,21 @@
+
+
+
+
+.react-datepicker-component .react-datepicker-input.is-open {
+    border: 1px solid  rgba(4, 13, 43, 0.8) !important;
+}
+
+
+.react-datepicker:not(.position-top) .react-datepicker-container .react-datepicker-top::after {
+    border-bottom-color: rgba(4, 13, 43, 0.8) !important;
+}
+
+.react-datepicker .react-datepicker-container .react-datepicker-top {
+    text-align: center;
+    background: linear-gradient(rgba(4, 13, 43, 0.8), rgba(0, 7, 34, 0.8));
+    color: #fff;
+    border-top: 1px solid  rgba(4, 13, 43, 0.8) !important;
+    border-left: 1px solid  rgba(4, 13, 43, 0.8) !important;
+    border-right: 1px solid  rgba(4, 13, 43, 0.8) !important;
+}

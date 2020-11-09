@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import '../assets/css/Navbar.css';
 
 
-import logo from '../assets/img/btnimg.png';
+import logo from '../assets/img/therasheet_logo.png';
 
 const Navbar = () => {
 
@@ -26,8 +26,8 @@ const Navbar = () => {
 
     return <nav className="navclass">
                 <div className="navlogo">
-                    <i><img src={logo} alt="Not Found!" /></i>
-                    <h4>Therasheet</h4>
+                    <i><img src={logo} style={{width:"50px", height:"50px"}} alt="Not Found!" /></i>
+                    <h3>Therasheet</h3>
                 </div>
                 <ul className={renderClasses()}>
                     {/* <li className="linkinnav"><a className="ainnav" href={"#"} onClick={() => history.push('/home')}>Home</a></li>
