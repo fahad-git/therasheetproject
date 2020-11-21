@@ -8,6 +8,7 @@ import Admin from './Admin';
 import ClicicDirector from './ClinicDirector';
 import Clinician from './Clinician';
 import Exercise from './Exercise';
+import Templates from './Templates'
 
 function Main (props) {
 
@@ -23,6 +24,7 @@ function Main (props) {
             <Route path='/admin' component={() => <Admin setHeaderComponent= {setHeaderComponent}/> } />
             <Route path='/director' component={() => <ClicicDirector setHeaderComponent= {setHeaderComponent } userDetails={userDetails} />} />
             <Route path='/clinician' component={() => <Clinician setHeaderComponent= {setHeaderComponent} userDetails={userDetails} /> } />
+            <Route path='/templates' component={Templates} />
 
             <Route path="/exercise" component={Exercise}/>
             {/* <Route path='/exercise' component={Exercise} /> */}

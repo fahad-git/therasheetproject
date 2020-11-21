@@ -37,6 +37,7 @@
     flex-direction: column;
     right: 100vw;
     min-height: 90vh;
+    height: 100%;
     z-index: 2;
     top: 11vh;
 
