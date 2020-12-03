@@ -34,8 +34,6 @@ function Admin (props) {
         "clinicname":"Clinic1",
         "username":"User1",
         "status":"Active",
-        "dis":"block",
-    
         };
 
     let clinic2 = {

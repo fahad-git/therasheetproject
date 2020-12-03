@@ -146,7 +146,17 @@ function ClinicDirector (props) {
         clinicianInfoToggle(true);
     }
 
+    const exerciseHandler = () => {
+        history.push("/addexercise");
+    }
 
+    const templateHandler = () => {
+        history.push("/templates");
+    }
+
+    const patientsHandler = () => {
+        history.push("/patients");
+    }
 
     return <div className="admin">
                     
@@ -213,11 +223,28 @@ function ClinicDirector (props) {
 
             <div className="container">
                 <div className="row" >
-                    <div className="col-12 offset-0" >
-                        {/* this is add new patient button  */}
-                        <button className="btn btn-primary text-left float-right" style={{backgroundColor:background_color}} onClick={addClinicHandler} >Add New Clinician</button>
+                    <div className="col-12 col-sm-12 col-md-3 col-lg-2 offset-md-6 offset-lg-8" >
+                        {/* this is add exercise button  */}
+                        <button className="btn text-center" style={{backgroundColor:background_color, color:"white", width:"100%"}} onClick={patientsHandler} >Patients</button>
                     </div>
-                </div>
+
+                    <div className="col-12 col-sm-12 col-md-3 col-lg-2" >
+                        {/* this is patient view button  */}
+                        <button className="btn text-center " style={{backgroundColor:background_color, color:"white", width:"100%"}} onClick={addClinicHandler} >Add Clinician</button>
+                    </div>
+                
+               </div>
+
+               <div className="row top-buffer">
+                    <div className="col-12 col-sm-12 col-md-3 col-lg-2 offset-md-6 offset-lg-8" >
+                        {/* this is add new clinician button  */}
+                        <button className="btn text-center " style={{backgroundColor:background_color, color:"white", width:"100%"}} onClick={exerciseHandler} >Exercises</button>
+                    </div>
+                    <div className="col-12 col-sm-12 col-md-3 col-lg-2" >
+                        {/* this is patient view button  */}
+                        <button className="btn text-center " style={{backgroundColor:background_color, color:"white", width:"100%"}} onClick={templateHandler}>Templates</button>
+                    </div>
+               </div>
 
                 <div className="row top-buffer">        
                     <div className="col-12 col-md-9 col-lg-9 col-xl-10  offset-xl-2  offset-lg-3 offset-md-3 offset-0 card">
