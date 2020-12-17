@@ -36,7 +36,7 @@ function AddExercises() {
                     "exercises": ["Upright Bike", "Rec Bike", "Treadmil"]
                 }
                 ]
-            },
+            }
     ]
 
     const history = useHistory();
@@ -296,7 +296,7 @@ function AddExercises() {
                             <div className="card-body">
                                         {/* back button */}
                                         <div className="row">
-                                            <button className="col-4 offset-1 col-sm-6 offset-sm-0 col-md-2 offset-md-0 col-lg-2 offset-lg-0 col-xl-2 offset-xl-0 btn btn-primary text-center" style={{backgroundColor:background_color, fontSize:"calc(2px + 2vmin)"}}  onClick={goBackHandler}><i className="ion-android-arrow-back"></i></button>
+                                            <button className="col-2 offset-1 col-sm-3 offset-sm-0 col-md-1 offset-md-0 col-lg-1 offset-lg-0 col-xl-1 offset-xl-0 btn btn-primary text-center" style={{backgroundColor:background_color, fontSize:"calc(2px + 2vmin)"}}  onClick={goBackHandler}><i className="ion-android-arrow-back"></i></button>
                                         </div>
                                 <div className="row justify-content-center" >
 

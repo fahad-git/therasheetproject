@@ -11,6 +11,7 @@ import '../assets/css/Admin.css';
 
 function Exercise(props){
 
+    const history = useHistory();
     const background_color = "rgba(4, 13, 43, 0.8)";
 
     var today = new Date();
@@ -332,6 +333,10 @@ function Exercise(props){
         forceUpdate();
     }
 
+    const goBackHandler = () => {
+        history.goBack();
+    }
+
     return <div className='admin'>
                 {/* Modal 1 this modal is for Exercise Sub Types*/}
                 <Modal show={isExerciseModalOpen}
@@ -366,6 +371,9 @@ function Exercise(props){
                 </Modal>
           
                 <div className="container">
+                        <div className="row">
+                            <button className="col-8 offset-0 col-md-4 offset-md-3 col-lg-3 offset-lg-3 col-xl-3  offset-xl-2 card btn btn-primary text-center" style={{backgroundColor:background_color, fontSize:"calc(2px + 2vmin)"}}  onClick={goBackHandler}><i className="ion-android-arrow-back"> Back</i></button>
+                        </div>
                     <div className='row'>
                         <div className="col-8 offset-0 col-md-4 offset-md-3 col-lg-3 offset-lg-3 col-xl-3  offset-xl-2 card">
                             <label style={{color:background_color}} >Patient Name: John</label>
@@ -400,7 +408,9 @@ function Exercise(props){
 
                     <div className="row top-buffer">        
                         <div className="col-12 offset-0 col-md-9 offset-md-3 col-lg-9 offset-lg-3 col-xl-10  offset-xl-2 card">
-                            <div className="card-body float-left">                           
+                            <div className="card-body float-left">
+
+                           
                                 <div className="row">
 
                                     <div className="col-12 offset-0 col-sm-6 offset-sm-0 col-md-5 offset-md-2 col-lg-4 offset-lg-4 col-xl-3 offset-xl-6 dropdown">
