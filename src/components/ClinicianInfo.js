@@ -1,19 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import '../assets/bootstrap/css/bootstrap.min.css';
 import '../assets/fonts/ionicons.min.css';
 import '../assets/css/ClinicInfo.css';
 
+import getClinicianInfo from '../services/director.service';
+
 function ClinicianInfo (props) {
 
-    var [userName, setUserName] = useState(props.params[0]);
-    var [clinicianName, setClinicianName] = useState(props.params[1]);
-    var [emailAddress, setEmailAddress] = useState('azhar@perfektsolution.com');
+    const ID = props.params[0]
+    var [userName, setUserName] = useState('');
+    var [clinicianName, setClinicianName] = useState('');
+    var [emailAddress, setEmailAddress] = useState('');
     var [accountStatus, setAccountStatus] = useState('Active');
     var [accountStatusButton, setAccountStatusButton] = useState('Deactivate');
 
 
     const buttonColor = "rgba(4, 13, 43, 0.8)";
+
+
+    useEffect(()=>{
+        getClinicianInfo.getClinicianInfo(ID)
+        .then((response) => {
+            // API
+           console.log(response.data);
+           setUserName(response.data["login"]["username"])
+           setClinicianName(response.data["name"]);
+          setEmailAddress(response.data["email"])
+           setAccountStatus(response.data["login"]["status"])
+
+        // database Update query
+
+        if(response.data["login"]["status"] == "Active")
+            setAccountStatusButton("Deactivate");
+        else
+            setAccountStatusButton("Activate");
+            
+
+          }).catch((err)=>{
+            console.log("Can not find user!")
+            
+          });
+    }, [])
+
 
     const changeStatusHandler = (event)=>{
         event.preventDefault();

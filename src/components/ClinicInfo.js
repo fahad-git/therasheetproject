@@ -1,25 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import '../assets/bootstrap/css/bootstrap.min.css';
 import '../assets/fonts/ionicons.min.css';
 import '../assets/css/ClinicInfo.css';
 
+import getClinicInfo from "../services/admin.service";
+
 function ClinicInfo(props) {
 
-    var [userName, setUserName] = useState(props.params[0]);
-    var [clinicName, setClinicName] = useState(props.params[1]);
-    var [ownerName, setOwnerName] = useState('Azhar');
-    var [phoneNumber, setPhoneNumber] = useState('+923132534867');
-    var [facilityAddress, setFacilityAddress] = useState('Gareebabad Near Sufi Zaheer SUkkur');
-    var [emailAddress, setEmailAddress] = useState('azhar@perfektsolution.com');
-    var [registrationDate, setRegistrationDate] = useState('12/4/2020');
-    var [subscriptionDate, setSubscriptionDate] = useState('15/5/2020');
-    var [numberOfClinicians, setNumberOfClinicians] = useState('20');
-    var [accountStatus, setAccountStatus] = useState('Active');
-    var [accountStatusButton, setAccountStatusButton] = useState('Deactivate');
+    const ID = useState(props.params[0]);
+    var [userName, setUserName] = useState('');
+    var [clinicName, setClinicName] = useState('');
+    var [ownerName, setOwnerName] = useState('');
+    var [phoneNumber, setPhoneNumber] = useState('');
+    var [facilityAddress, setFacilityAddress] = useState('');
+    var [emailAddress, setEmailAddress] = useState('');
+    var [registrationDate, setRegistrationDate] = useState('');
+    var [subscriptionDate, setSubscriptionDate] = useState('');
+    var [numberOfClinicians, setNumberOfClinicians] = useState('');
+    var [accountStatus, setAccountStatus] = useState('');
+    var [accountStatusButton, setAccountStatusButton] = useState('');
 
 
     const buttonColor = "rgba(4, 13, 43, 0.8)";
+
+    useEffect(()=>{
+        getClinicInfo.getClinicInfo(ID)
+        .then((response) => {
+            // API
+           console.log(response.data);
+           setUserName(response.data["userName"])
+           setClinicName(response.data["clinicName"]);
+           setOwnerName(response.data["ownerName"])
+           setPhoneNumber(response.data["phoneNumber"])
+           setFacilityAddress(response.data["facilityAddress"])
+           setEmailAddress(response.data["emailAddress"])
+           setRegistrationDate(response.data["registrationDate"])
+           setSubscriptionDate(response.data["subscriptionDate"])
+           setNumberOfClinicians(response.data["numberOfClinicians"])
+           setAccountStatus(response.data["accountStatus"])
+
+        // database Update query
+
+        if(response.data["accountStatus"] == "Active")
+            setAccountStatusButton("Deactivate");
+        else
+            setAccountStatusButton("Activate");
+            
+
+          }).catch((err)=>{
+            console.log("Can not find user!")
+            
+          });
+    }, [])
+
+
 
     const changeStatusHandler = (event)=>{
         event.preventDefault();

@@ -1,8 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import '../assets/bootstrap/css/bootstrap.min.css';
 import '../assets/fonts/ionicons.min.css';
 import '../assets/css/ClinicInfo.css';
 
+import getAdminInfo from '../services/admin.service';
+import updateAdminInfo from '../services/admin.service';
+import uploadProfilePicture from '../services/admin.service';
+import validatePassword from '../services/admin.service';
 
 function AdminInfo(props){
 
@@ -11,7 +15,7 @@ function AdminInfo(props){
 
     var [adminName, setAdminName] = useState('James');
     var [userName, setUserName] = useState(props.params[0]);
-    var [emailAddress, setEmailAddress] = useState('james@perfektsolution.com');
+    var [emailAddress, setEmailAddress] = useState('');
     var [profilePicture, setProfilePicture] = useState('https://www.nicepng.com/png/full/52-522753_photo-of-a-business-woman-professional-woman-png.png');
     var [accountStatusButton, setAccountStatusButton] = useState('Edit');
     var [disableFields, disableFieldsToggle] = useState(true);
@@ -19,10 +23,27 @@ function AdminInfo(props){
     var [status, setStatus] = useState('');
     var[showProfile, setShowProfile] = useState(["none","Profile Picture"]);
 
+
+    var [selectedFile, setSelectedFile] = useState(null);
+
     const ButtonColor = "rgba(4, 13, 43, 0.8)";
 
 
     const updatePassword = (e) => setPassword(['block',e.target.value]);
+
+
+    useEffect(()=>{
+        getAdminInfo.getAdminInfo()
+        .then((response) => {
+            // API
+            console.log(response.data);
+            setAdminName(response.data["adminName"])
+            setUserName(response.data["userName"])
+          }).catch((err)=>{
+            console.log("Can not find user!")
+          });
+    }, [])
+
 
     const updatInformationHandler = (event) => {
         event.preventDefault();
@@ -33,17 +54,71 @@ function AdminInfo(props){
             setAccountStatusButton("Update");
         }else{
 
-            console.log()
+            console.log("Obj: "+ selectedFile);
 
-            setStatus("Profile Updated");
-            disableFieldsToggle(true);
-            setPassword(["none",""]);
-            setAccountStatusButton("Edit");
+            if(selectedFile == null){
+                setStatus("Select Profile Picture");
+                return;
+            }else if(password[1].trim() === ''){
+                setStatus("Type Password");
+                return;
+            }
+
+            // Create an object of formData 
+            const data = new FormData(); 
+            // Update the formData object 
+            data.append( 
+                'file', 
+               selectedFile
+            );
+
+           
+
+            validatePassword.validatePassword({"password": password[1].trim()})
+            .then( (passResponse) => {
+            
+                let res = passResponse.data["res"];
+
+                if(res == false){
+                    setStatus("Invalid Password");
+                    return;
+                }
+
+                uploadProfilePicture.uploadProfilePicture(data)
+                .then( (response) => {
+                    console.log(response);
+                    let path = response.data.path;
+                    let changeObject = {
+                        "adminName":adminName,
+                        "profilePicture":path
+                    }
+                    updateAdminInfo.updateAdminInfo(changeObject)
+                    .then((res) => {
+                        console.log("Saved Successfully!")
+                        setStatus("Profile Updated");
+                        disableFieldsToggle(true);
+                        setPassword(["none",""]);
+                        setAccountStatusButton("Edit");
+                    })
+                    .catch((err) => {
+                        console.log("error");
+                    });
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+            })
+            .catch((err) => {
+                console.log("error");
+            });
         }
     }
+   
+    
 
     const profilePictureHandler = (event) => {
         let file = event.target.files[0]
+        setSelectedFile(file);
         var reader = new FileReader();
         var url = reader.readAsDataURL(file);
 

@@ -19,13 +19,13 @@ function Main (props) {
 
     return(
         <Switch>
-            <Route path='/home' component={() => <Home setHeaderComponent= {setHeaderComponent} />} />
-            <Route path='/about' component={() => <About setHeaderComponent= {setHeaderComponent} />} />
-            <Route path='/services' component={() => <Services setHeaderComponent= {setHeaderComponent} /> } />
-            <Route path='/contact' component={() => <Contact setHeaderComponent= {setHeaderComponent} />} />
-            <Route path='/admin' component={() => <Admin setHeaderComponent= {setHeaderComponent}/> } />
-            <Route path='/director' component={() => <ClicicDirector setHeaderComponent= {setHeaderComponent } userDetails={userDetails} />} />
-            <Route path='/clinician' component={() => <Clinician setHeaderComponent= {setHeaderComponent} userDetails={userDetails} /> } />
+            <Route path='/home'><Home setHeaderComponent= {setHeaderComponent} /></Route>
+            <Route path='/about'><About setHeaderComponent= {setHeaderComponent} /></Route>
+            <Route path='/services'> <Services setHeaderComponent= {setHeaderComponent} /> </Route>
+            <Route path='/contact'> <Contact setHeaderComponent= {setHeaderComponent} /> </Route>
+            <Route path='/admin'><Admin setHeaderComponent= {setHeaderComponent}/></Route>
+            <Route path='/director'><ClicicDirector setHeaderComponent= {setHeaderComponent } userDetails={userDetails} /> </Route>
+            <Route path='/clinician'><Clinician setHeaderComponent= {setHeaderComponent} userDetails={userDetails} /> </Route>
             <Route path="/exercise" component={Exercise}/>  
             <Route path="/patients" component={PatientsView} />
             <Route path='/addexercise' component={AddExercises} />

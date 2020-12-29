@@ -1,47 +1,47 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import '../assets/bootstrap/css/bootstrap.min.css';
 import '../assets/fonts/ionicons.min.css';
 import '../assets/css/Admin.css';
 
-
+import getAllExercises from '../services/director.service';
 
 function AddExercises() {
 
 
-    const exerciseDataa = [
-        {
-        "supertype": "Upper Body",
-        "subtype":[
-            {
-            "type": "Table Exercise",
-            "exercises": ["SLR-Flex", "SLR-AB", "SLR-EXT", "SLR-ADD", "Quard", "HS Set"]
-            },
-            {
-                "type": "Cardio Equipment",
-                "exercises": ["Upright Bike", "Rec Bike", "Treadmil"]
-            }
-            ]
-        },
-        {
-            "supertype": "Lower Body",
-            "subtype":[
-                {
-                "type": "Table Exercise",
-                "exercises": ["SLR-Flex", "SLR-AB", "SLR-EXT", "SLR-ADD", "Quard", "HS Set"]
-                },
-                {
-                    "type": "Cardio Equipment",
-                    "exercises": ["Upright Bike", "Rec Bike", "Treadmil"]
-                }
-                ]
-            }
-    ]
+    // const exerciseDataa = [
+    //     {
+    //     "supertype": "Upper Body",
+    //     "subtype":[
+    //         {
+    //         "type": "Table Exercise",
+    //         "exercises": ["SLR-Flex", "SLR-AB", "SLR-EXT", "SLR-ADD", "Quard", "HS Set"]
+    //         },
+    //         {
+    //             "type": "Cardio Equipment",
+    //             "exercises": ["Upright Bike", "Rec Bike", "Treadmil"]
+    //         }
+    //         ]
+    //     },
+    //     {
+    //         "supertype": "Lower Body",
+    //         "subtype":[
+    //             {
+    //             "type": "Table Exercise",
+    //             "exercises": ["SLR-Flex", "SLR-AB", "SLR-EXT", "SLR-ADD", "Quard", "HS Set"]
+    //             },
+    //             {
+    //                 "type": "Cardio Equipment",
+    //                 "exercises": ["Upright Bike", "Rec Bike", "Treadmil"]
+    //             }
+    //             ]
+    //         }
+    // ]
 
     const history = useHistory();
 
-    var [exerciseData, setExerciseData] = useState(exerciseDataa)
+    var [exerciseData, setExerciseData] = useState([])
     var [superType, setSuperType] = useState(["none",""]);
     var [subType, setSubType] = useState(["none","","block"]);
     var [exerciseName, setExerciseName] = useState(["none","","block"]);
@@ -54,6 +54,17 @@ function AddExercises() {
 
     const background_color = "rgba(4, 13, 43, 0.8)";
     const forceUpdate = useForceUpdate();
+
+
+    useEffect(()=>{
+        getAllExercises.getAllExercises()
+        .then((response) => {
+            console.log(response.data);
+            // setExerciseData(response.data)
+        }).catch((err) => {
+            console.log(err);
+        })
+    },[]);
 
     const superTypeHandler = (event) => {
        

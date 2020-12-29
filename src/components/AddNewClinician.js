@@ -24,11 +24,11 @@ function AddNewCLinician () {
 
     var [new_password_eye_icon, set_new_password_eye_icon] = useState("ion-eye");
 
-    const updateClinicianName = e => setUserName(e.target.value);
+    const updateClinicianName = e => setClinicianName(e.target.value);
     const updateUserName = e => setUserName(e.target.value);
-    const updateEmailAddress = e => setUserName(e.target.value);
-    const updatePhoneNumber = e => setUserName(e.target.value);
-    const updateNewPassword = e => setNewPassword(e.target.value);
+    const updateEmailAddress = e => setEmailAddress(e.target.value);
+    const updatePhoneNumber = e => setPhoneNumber(e.target.value);
+    const updateNewPassword = e => setPhoneNumber(e.target.value);
     const updateConfirmPassword = e => setConfirmPassword(e.target.value);
 
 

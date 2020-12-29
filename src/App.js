@@ -23,7 +23,7 @@ function App() {
   return (
         <BrowserRouter>
           <div>
-            { headerComponent ?  <Navbar /> : <Header userName={userName} accountType={accountType} profile_url = {profileUrl} />}
+            { headerComponent ?  <Navbar /> : <Header />}
               {/* <Header  userName="Sarah" accountType="Admin" profile_url = {profile_url} /> */}
             <Main setHeaderComponent={setHeaderComponent} userDetails= {userDetails}/>
           </div>

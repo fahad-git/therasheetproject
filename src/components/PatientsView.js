@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import {Modal} from 'react-bootstrap';
 import '../assets/bootstrap/css/bootstrap.min.css';
@@ -10,68 +10,90 @@ import all_patient_icon from '../assets/img/all_patient_icon.png';
 
 import PatientViewInfo from './PatientViewInfo';
 
-
+import getPatientsForView from '../services/director.service';
 
 function PatientsView() {
 
     
     // Accessing data
 
-    let patient1 = {
-        "patientname":"patient1",
-        "username":"User1",
-        "status":"Active",
-        };
+    // let patient1 = {
+    //     "patientname":"patient1",
+    //     "username":"User1",
+    //     "status":"Active",
+    //     };
 
-    let patient2 = {
-        "patientname":"patient2",
-        "username":"User2",
-        "status":"Active",
-        };
+    // let patient2 = {
+    //     "patientname":"patient2",
+    //     "username":"User2",
+    //     "status":"Active",
+    //     };
 
-    let patient3 = {
-            "patientname":"patient3",
-            "username":"User3",
-            "status":"Blocked",
-            };
+    // let patient3 = {
+    //         "patientname":"patient3",
+    //         "username":"User3",
+    //         "status":"Blocked",
+    //         };
 
-    let patient4 = {
-            "patientname":"patient4",
-            "username":"User4",
-            "status":"Active",
-            };
-
-
-    let patient5 = {
-            "patientname":"patient5",
-            "username":"User5",
-            "status":"Active",
-            };
-
-    let patient6 = {
-            "patientname":"patient6",
-            "username":"User6",
-            "status":"Blocked",
-            };
-
-    let patient7 = {
-            "patientname":"patient7",
-            "username":"User7",
-            "status":"Active",
-            };
+    // let patient4 = {
+    //         "patientname":"patient4",
+    //         "username":"User4",
+    //         "status":"Active",
+    //         };
 
 
-    const all_patients = [patient1,  patient2, patient3, patient4, patient5, patient6, patient7];
+    // let patient5 = {
+    //         "patientname":"patient5",
+    //         "username":"User5",
+    //         "status":"Active",
+    //         };
+
+    // let patient6 = {
+    //         "patientname":"patient6",
+    //         "username":"User6",
+    //         "status":"Blocked",
+    //         };
+
+    // let patient7 = {
+    //         "patientname":"patient7",
+    //         "username":"User7",
+    //         "status":"Active",
+    //         };
+
+
+    // const all_patients = [patient1,  patient2, patient3, patient4, patient5, patient6, patient7];
 
     const history = useHistory();
     const modalHeaderColor = "rgba(4, 13, 43, 0.8)";
 
-    var [patientInformation, setPatientInformation] = useState(all_patients);
+    var [patientInformation, setPatientInformation] = useState([]);
     var [isPatientInfoOpen, patientInfoToggle] = useState(false);
     var [params, setParams] = useState([]);
 
-    const patientInfoHandler = (username, patientname) =>{
-        setParams([username, patientname])
+
+    useEffect(()=>{
+        getPatientsForView.getPatientsForView()
+        .then((response) => {
+            console.log(response.data)
+            let object = []
+            for(let obj of response.data){
+                let tmp = {
+                    "patientname":obj["name"],
+                    "id":obj["patientId"],
+                    "status":obj["status"]
+                }
+
+                object.push(tmp);
+            }
+            setPatientInformation(object);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    },[])
+
+    const patientInfoHandler = (id) =>{
+        setParams([id])
         patientInfoToggle(true);        
     }
 
@@ -107,11 +129,11 @@ function PatientsView() {
 
                                 <div className="row justify-content-center align-items-center top-buffer" style={{marginTop:"100px"}}>
                                     <div className="col-12">
-                                        {patientInformation.map( ({patientname, username, status}, index)=>{
+                                        {patientInformation.map( ({patientname, id, status}, index)=>{
                                         return (
-                                                <div key={index} className="col-6 col-sm-4 col-md-3 col-lg-2 offset-0" style={{float:"left", marginTop:"20px"}} onClick={() => patientInfoHandler(username, patientname)}>
+                                                <div key={index} className="col-6 col-sm-4 col-md-3 col-lg-2 offset-0" style={{float:"left", marginTop:"20px"}} onClick={() => patientInfoHandler(id)}>
                                                     <div className="card tile" >
-                                                        <img alt="Not found" className="clinicicon" src={(status === "Active") ? active_patient_icon : all_patient_icon }/>
+                                                        <img alt="Not found" className="clinicicon" src={(status === "Completed") ? all_patient_icon : active_patient_icon }/>
                                                     </div>                                                                  
                                                     <label className="card align-text-center" style={{textAlign:"center"}}>{patientname}</label>                                               
                                                 </div>

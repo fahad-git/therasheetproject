@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import '../assets/bootstrap/css/bootstrap.min.css';
 import '../assets/css/Admin.css';
 
+import getAllTemplates from '../services/director.service';
 
 
 function Templates() {
@@ -124,6 +125,19 @@ function Templates() {
     var [exSuperType, setExSuperType] = useState("");
     var [exSubType, setExSubType] = useState("");
     var [exName, setExName] = useState("");
+
+
+    useEffect(()=>{
+        getAllTemplates.getAllTemplates()
+        .then((response) => {
+            console.log(response.data);
+            setTemplatesData(response.data)
+        }).catch((err) => {
+            console.log(err);
+        })
+    },[]);
+
+
 
     const superTypeHandler = (event) => {
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {useHistory} from 'react-router-dom';
 
 import '../assets/bootstrap/css/bootstrap.min.css';
@@ -15,6 +15,8 @@ import ClinicianInfo from './ClinicianInfo';
 import ChangePassword from './ChangePassword';
 import ClinicDirectorInfo from './ClinicDirectorInfo';
 import AddNewClinician from './AddNewClinician';
+
+import getDirectorBoard from '../services/director.service';
 
 import { DIRECTOR_PROFILE_INFO_MODAL_CLOSE, DIRECTOR_PASSWORD_MODAL_CLOSE } from "../constants/modal";
 
@@ -33,53 +35,53 @@ function ClinicDirector (props) {
 
     // Accessing data
 
-    let clinician1 = {
-        "clinicname":"clinician1",
-        "username":"User1",
-        "status":"Active",
-        };
+    // let clinician1 = {
+    //     "clinicname":"clinician1",
+    //     "username":"User1",
+    //     "status":"Active",
+    //     };
 
-    let clinician2 = {
-        "clinicname":"clinician2",
-        "username":"User2",
-        "status":"Active",
-        };
+    // let clinician2 = {
+    //     "clinicname":"clinician2",
+    //     "username":"User2",
+    //     "status":"Active",
+    //     };
 
-    let clinician3 = {
-            "clinicname":"clinician3",
-            "username":"User3",
-            "status":"Blocked",
-            };
+    // let clinician3 = {
+    //         "clinicname":"clinician3",
+    //         "username":"User3",
+    //         "status":"Blocked",
+    //         };
 
-    let clinician4 = {
-            "clinicname":"clinician4",
-            "username":"User4",
-            "status":"Active",
-            };
-
-
-    let clinician5 = {
-            "clinicname":"clinician5",
-            "username":"User5",
-            "status":"Active",
-            };
-
-    let clinician6 = {
-            "clinicname":"clinician6",
-            "username":"User6",
-            "status":"Blocked",
-            };
-
-    let clinician7 = {
-            "clinicname":"clinician7",
-            "username":"User7",
-            "status":"Active",
-            };
+    // let clinician4 = {
+    //         "clinicname":"clinician4",
+    //         "username":"User4",
+    //         "status":"Active",
+    //         };
 
 
-    const active_clinic = [clinician1, clinician2, clinician4, clinician5, clinician7]; 
-    const blocked_clinic = [clinician3, clinician6]; 
-    const elems = [clinician1,  clinician2, clinician3, clinician4, clinician5, clinician6, clinician7];
+    // let clinician5 = {
+    //         "clinicname":"clinician5",
+    //         "username":"User5",
+    //         "status":"Active",
+    //         };
+
+    // let clinician6 = {
+    //         "clinicname":"clinician6",
+    //         "username":"User6",
+    //         "status":"Blocked",
+    //         };
+
+    // let clinician7 = {
+    //         "clinicname":"clinician7",
+    //         "username":"User7",
+    //         "status":"Active",
+    //         };
+
+
+    // const active_clinic = [clinician1, clinician2, clinician4, clinician5, clinician7]; 
+    // const blocked_clinic = [clinician3, clinician6]; 
+    // const elems = [clinician1,  clinician2, clinician3, clinician4, clinician5, clinician6, clinician7];
         
 
     const modalHeaderColor = "rgba(4, 13, 43, 0.8)";
@@ -90,7 +92,7 @@ function ClinicDirector (props) {
     var [directorName, setDirectorName] = useState('John');
     var [userName, setUserName] = useState('johntherasheet');
     var [profileURL, setProfileURL] = useState('');
-    var [clinicianInformation, setClinicianInformation] = useState(elems);
+    var [clinicianInformation, setClinicianInformation] = useState([]);
     var [params, setParams] = useState([]);
     var [background_color, setBackground_color] = useState("rgba(4, 13, 43, 0.8)");
     var [isClinicianInfoOpen, clinicianInfoToggle] = useState(false);
@@ -100,6 +102,33 @@ function ClinicDirector (props) {
 
     const {isDirectorAccountInfoOpen} = useSelector((state) => state.modalReducer);
     const {isDirectorPasswordChange} = useSelector((state) => state.modalReducer);
+
+
+    // this is Hook which replaces 3 life cycle methods
+    // componentDidMount
+    // componentDidUpdate
+    // componentWillUnmount 
+    useEffect(()=>{
+        getDirectorBoard.getDirectorBoard()
+        .then((response) => {
+            // API
+            console.log(response.data);
+            let object = []
+            for(let obj of response.data){
+                let tmp = { 
+                    "id": obj["clinicianId"],
+                    "clinicname" : obj["name"],
+                    "status": obj["login"]["status"]
+                }
+                object.push(tmp);
+            }
+
+            setClinicianInformation(object);
+          }).catch((err)=>{
+            console.log("Can not find clinicians!")
+            setClinicianInformation([])
+          });
+    }, [])
 
     const accountInfoToggle = () => {
         dispatch({
@@ -127,22 +156,55 @@ function ClinicDirector (props) {
     const clinicSelectHandler = (event) =>{
         let value = event.target.value;
         
+        getDirectorBoard.getDirectorBoard()
+        .then((response) => {
+            // API
+        console.log(response.data);
+
+        let object = []
+        for(let obj of response.data){
+            let tmp = { 
+                "id": obj["clinicianId"],
+                "clinicname" : obj["name"],
+                "status": obj["login"]["status"]
+            }
+            object.push(tmp);
+        }
+
         switch(value){
             case "Blocked Clinics":
+                let blocked_clinic = []
+                for(let obj of object){
+                    if(obj["status"] == "Blocked")
+                        blocked_clinic.push(obj);
+                }
                 setClinicianInformation(blocked_clinic);
             break;
 
             case "Active Clinics":
+                let active_clinic = []
+                for(let obj of object){
+                    if(obj["status"] == "Active")
+                        active_clinic.push(obj);
+                }
                 setClinicianInformation(active_clinic)
             break;
             default:
-                setClinicianInformation(elems);
+                console.log("Default");
+                setClinicianInformation(object)
+                // setClinicsInformation(elems);
             break;
         }
+
+        }).catch((err)=>{
+        console.log("Can not find clinicians!")
+        setClinicianInformation([])
+    });
+
     }
 
-    const clinicInfoHandler = (username, clinicname) =>{
-        setParams([username, clinicname])
+    const clinicInfoHandler = (id) =>{
+        setParams([id])
         clinicianInfoToggle(true);
     }
 
@@ -262,9 +324,9 @@ function ClinicDirector (props) {
 
                             <div className="row justify-content-center align-items-center top-buffer">
                                 <div className="col-12">
-                                    {clinicianInformation.map( ({clinicname, username, status}, index)=>{
+                                    {clinicianInformation.map( ({clinicname, id, status}, index)=>{
                                     return (
-                                            <div key={index} className="col-6 col-sm-4 col-md-3 col-lg-2 offset-0" style={{float:"left", marginTop:"20px"}} onClick={() => clinicInfoHandler(username, clinicname)}>
+                                            <div key={index} className="col-6 col-sm-4 col-md-3 col-lg-2 offset-0" style={{float:"left", marginTop:"20px"}} onClick={() => clinicInfoHandler(id)}>
                                                 <div className="card tile" >
                                                     <img alt="Not found" className="clinicicon" src={(status === "Active") ? active_clinician_icon : blocked_clinician_icon} />
                                                 </div>                                                                  

@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import '../assets/bootstrap/css/bootstrap.min.css'; 
 import '../assets/fonts/ionicons.min.css';
 
+import resetPassword from '../services/admin.service';
+
 function ChangePassword(props){
 
-    var [userName, setUserName] = useState(props.params[0]);
+    var [userName, setUserName] = useState(props.params);
     var [oldPassword, setOldPassword] = useState('');
     var [newPassword, setNewPassword] = useState('');
     var [confirmPassword, setConfirmPassword] = useState('');
@@ -38,17 +40,25 @@ function ChangePassword(props){
                 return;
 
         // pass hashedPassword to the API
+        let obj = {
+            "oldPassword":oldPassword,
+            "newPassword":newPassword
+        }
+        resetPassword.resetPassword(obj)
+        .then((response) => {
+            console.log(response.data);
+            // database response if ok
+            if(response.data === "True"){
+                status_div.style.color = "green";
+                setStatus("Password Changed");
+            }else
+                setStatus("Password Change Request Failed Try Again");
 
-        let correct_password = true;
-        let response_change = true;
-        // database response if ok
-        if(correct_password && response_change){
-            status_div.style.color = "green";
-            setStatus("Password Changed");
-        } else if(correct_password && !response_change){
+        }).catch((err) => {
+            console.log(err);
+            status_div.style.color = "red";
             setStatus("Server busy! Please try later");
-        }else
-            setStatus("Incorrect Password");
+        })
 
     }
 
@@ -86,6 +96,7 @@ function ChangePassword(props){
         else
             set_new_password_eye_icon("ion-eye");
     }
+
 
     return <div>
                 <div className="clinicinfo">

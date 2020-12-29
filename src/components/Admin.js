@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {useHistory} from 'react-router-dom';
 
 import '../assets/bootstrap/css/bootstrap.min.css';
@@ -16,6 +16,10 @@ import ChangePassword from './ChangePassword';
 import {ADMIN_PASSWORD_MODAL_CLOSE, ADMIN_PROFILE_INFO_MODAL_CLOSE } from '../constants/modal';
 import { useSelector, useDispatch } from 'react-redux';
 
+import getAdminBoard from '../services/user.service'
+import getAdminInfo from '../services/admin.service'
+
+
 
 function Admin (props) {
 
@@ -29,7 +33,7 @@ function Admin (props) {
     // setAccountProfileUrl("https://thumbs.dreamstime.com/b/asian-male-doctor-man-indian-wearing-white-coat-shirt-tie-stethoscope-pictured-hospital-30888074.jpg");
 
     // Accessing data
-
+/*
     let clinic1 = {
         "clinicname":"Clinic1",
         "username":"User1",
@@ -74,10 +78,10 @@ function Admin (props) {
             };
 
 
-    const active_clinic = [clinic1, clinic2, clinic4, clinic5, clinic7]; 
-    const blocked_clinic = [clinic3, clinic6]; 
+    // const active_clinic = [clinic1, clinic2, clinic4, clinic5, clinic7]; 
+    // const blocked_clinic = [clinic3, clinic6]; 
     const elems = [clinic1,  clinic2, clinic3, clinic4, clinic5, clinic6, clinic7];
-        
+*/
 
     const modalHeaderColor = "rgba(4, 13, 43, 0.8)";
 
@@ -85,10 +89,10 @@ function Admin (props) {
 
     const dispatch = useDispatch();
 
-    var [adminName, setAdminName] = useState('John');
-    var [userName, setUserName] = useState('johntherasheet');
+    var [adminName, setAdminName] = useState('');
+    var [userName, setUserName] = useState('');
     var [profileURL, setProfileURL] = useState('');
-    var [clinicsInformation, setClinicsInformation] = useState(elems);
+    var [clinicsInformation, setClinicsInformation] = useState([]);
     var [params, setParams] = useState([]);
     var [background_color, setBackground_color] = useState("rgba(4, 13, 43, 0.8)");
     var [isClinicInfoOpen, clinicInfoToggle] = useState(false);
@@ -99,7 +103,6 @@ function Admin (props) {
     // const {isClinicInfoOpen} = useSelector((state) => state.modalReducer);
     const {isAccountInfoOpen} = useSelector((state) => state.modalReducer);
     const {isPasswordChange} = useSelector((state) => state.modalReducer);
-
 
     const passwordChangeToggle = () => {
         dispatch({
@@ -116,36 +119,99 @@ function Admin (props) {
     }
 
     const addClinicHandler = () =>{
-        alert("New Clinic Will be Added")
+       
+            getAdminInfo.getAdminInfo()
+            .then((response) => {
+                // API
+                console.log(response.data);
+               
+              }).catch((err)=>{
+                console.log("Can not find user!")
+              });
+        
+        
+        //alert("New Clinic Will be Added")
+
         // setParams([userName]);
         // passwordChangeToggle(true);
         // accountInfoToggle(true);
-
     }
     
 
     const clinicSelectHandler = (event) =>{
         let value = event.target.value;
-        
-        switch(value){
-            case "Blocked Clinics":
-                setClinicsInformation(blocked_clinic);
-            break;
 
-            case "Active Clinics":
-                setClinicsInformation(active_clinic)
-            break;
-            default:
-                setClinicsInformation(elems);
-            break;
-        }
+        getAdminBoard.getAdminBoard()
+            .then((response) => {
+                // API
+                console.log(response.data);
+
+            switch(value){
+                case "Blocked Clinics":
+                    let blocked_clinic = []
+                    for(let obj of response.data){
+                        if(obj["status"] == "Blocked")
+                            blocked_clinic.push(obj);
+                    }
+                    setClinicsInformation(blocked_clinic);
+                break;
+
+                case "Active Clinics":
+                    let active_clinic = []
+                    for(let obj of response.data){
+                        if(obj["status"] == "Active")
+                            active_clinic.push(obj);
+                    }
+                    setClinicsInformation(active_clinic)
+                break;
+                default:
+                    console.log("Default");
+                    setClinicsInformation(response.data)
+                    // setClinicsInformation(elems);
+                break;
+            }
+
+        }).catch((err)=>{
+        console.log("Can not find clinics!")
+        setClinicsInformation([])
+    });
+
     }
 
-    const clinicInfoHandler = (username, clinicname) =>{
-        setParams([username, clinicname])
+    const clinicInfoHandler = (id) =>{
+        setParams([id])
         clinicInfoToggle(true);
     }
 
+
+    // this is Hook which replaces 3 life cycle methods
+    // componentDidMount
+    // componentDidUpdate
+    // componentWillUnmount 
+    useEffect(()=>{
+        getAdminBoard.getAdminBoard()
+        .then((response) => {
+            // API
+            console.log(response.data);
+            setClinicsInformation(response.data)
+          }).catch((err)=>{
+            console.log("Can not find user!")
+            setClinicsInformation([])
+          });
+    }, [])
+
+    
+    useEffect(()=>{
+        getAdminInfo.getAdminInfo()
+        .then((response) => {
+            // API
+            console.log(response.data);
+            setAdminName(response.data["adminName"])
+            setUserName(response.data["userName"])
+          }).catch((err)=>{
+            console.log("Can not find user!")
+          });
+    }, [])
 
 
     return <div className="admin">
@@ -192,7 +258,7 @@ function Admin (props) {
                         <h3 className="text-center" style={{color:background_color}}><strong>Admin Password Change</strong></h3>
                     </Modal.Header>
                     <Modal.Body>
-                        {<ChangePassword params={params}/>}
+                        {<ChangePassword params={userName}/>}
                     </Modal.Body>
                 </Modal>
 
@@ -220,9 +286,9 @@ function Admin (props) {
 
                             <div className="row justify-content-center align-items-center top-buffer">
                                 <div className="col-12">
-                                    {clinicsInformation.map( ({clinicname, username, status}, index)=>{
+                                    {clinicsInformation.map( ({clinicname, id, status}, index)=>{
                                     return (
-                                            <div key={index} className="col-6 col-sm-4 col-md-3 col-lg-2 offset-0" style={{float:"left", marginTop:"20px"}} onClick={() => clinicInfoHandler(username, clinicname)}>
+                                            <div key={index} className="col-6 col-sm-4 col-md-3 col-lg-2 offset-0" style={{float:"left", marginTop:"20px"}} onClick={() => clinicInfoHandler(id)}>
                                                 <div className="card tile" >
                                                     <img alt="Not found" className="clinicicon" src={(status === "Active") ? active_clinic_icon : blocked_clinic_icon} />
                                                 </div>                                                                  

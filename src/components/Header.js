@@ -15,7 +15,7 @@ import { DIRECTOR_PROFILE_INFO_MODAL_OPEN, DIRECTOR_PASSWORD_MODAL_OPEN } from "
 import { CLINICIAN_PROFILE_INFO_MODAL_OPEN, CLINICIAN_PASSWORD_MODAL_OPEN } from "../constants/modal";
 
 
-function Header (props) {
+function Header () {
 
     const history = useHistory();
     const dispatch = useDispatch();
@@ -27,14 +27,7 @@ function Header (props) {
     const settingButtonNode = useRef();
     const profileNode = useRef();
     const profileButtonNode = useRef();
-
-    // username and account type will be passed to this component.
-    // var [userName, setUsername] = useState(props.userName);
-    // var [accountType, setType] = useState(props.accountType);
-    // var [profileUrl, setProfileUrl] = useState(props.profile_url);
-    // const profileUrl = "https://www.unitex.com/wp-content/uploads/2018/04/Unitex-Nursing-Shortage-1.jpg";
     
-
     const { isClinicInfoOpen } = useSelector((state) => state.modalReducer);
     const { isPasswordChange } = useSelector((state) => state.modalReducer);
     const [accountType, setAccountType] = useState();
@@ -54,22 +47,22 @@ function Header (props) {
     },[user]);
 
     const profileInfoHandler = () => {
-        switch(accountType){
-            case "Admin": 
+        switch(accountType.toLowerCase()){
+            case "admin": 
                 dispatch({
                     type: ADMIN_PROFILE_INFO_MODAL_OPEN,
                     isAccountInfoOpen: true
                 });
             break;
 
-            case "Director": 
+            case "director": 
                 dispatch({
                     type: DIRECTOR_PROFILE_INFO_MODAL_OPEN,
                     isDirectorAccountInfoOpen: true
                     });
             break;
 
-            case "Clinician": 
+            case "clinician": 
                 dispatch({
                     type: CLINICIAN_PROFILE_INFO_MODAL_OPEN,
                     isClinicianAccountInfoOpen: true
@@ -79,22 +72,22 @@ function Header (props) {
     }
 
     const changePasswordHandler = () => {
-        switch(accountType){
-            case "Admin": 
+        switch(accountType.toLowerCase()){
+            case "admin": 
                 dispatch({
                     type: ADMIN_PASSWORD_MODAL_OPEN,
                     isPasswordChange: true
                 });
             break;
 
-            case "Director": 
+            case "director": 
                 dispatch({
                     type: DIRECTOR_PASSWORD_MODAL_OPEN,
                     isDirectorPasswordChange: true
                     });
             break;
 
-            case "Clinician": 
+            case "clinician": 
                 dispatch({
                     type: CLINICIAN_PASSWORD_MODAL_OPEN,
                     isClinicianPasswordChange: true

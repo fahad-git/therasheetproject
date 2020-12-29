@@ -53,7 +53,7 @@ export default function (state = initialState, action) {
     // Cases for Clinician
 
     case CLINICIAN_PASSWORD_MODAL_OPEN:
-      return { ...state, isClinicianPasswordChange: action.isClinicianPasswordChange};
+      return { ...state, isClinicianPasswordChangey: action.isClinicianPasswordChange};
 
     case CLINICIAN_PASSWORD_MODAL_CLOSE:
       return { ...state, isClinicianPasswordChange: action.isClinicianPasswordChange};
