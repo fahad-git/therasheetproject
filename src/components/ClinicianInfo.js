@@ -5,6 +5,8 @@ import '../assets/fonts/ionicons.min.css';
 import '../assets/css/ClinicInfo.css';
 
 import getClinicianInfo from '../services/director.service';
+import blockClinician from "../services/director.service";
+import activeClinician from "../services/director.service";
 
 function ClinicianInfo (props) {
 
@@ -51,12 +53,32 @@ function ClinicianInfo (props) {
 
         if(accountStatusButton === "Activate"){
             
-            setAccountStatus("Active");
-            setAccountStatusButton("Deactivate");
+            activeClinician.activeClinician(ID)
+            .then((response) => {
+                if(response.data == "True"){
+                    console.log("ID: "+ ID + " Active")
+
+                    setAccountStatus("Active");
+                    setAccountStatusButton("Deactivate");
+                }
+            }).catch((err) => {
+                console.log(err);
+            })
+           
             }
         else{
-            setAccountStatus("Disabled");
-            setAccountStatusButton("Activate");
+
+            blockClinician.blockClinician(ID)
+            .then((response) => {
+                if(response.data == "True"){
+                    console.log("ID: "+ ID + " Blocked")
+                    setAccountStatus("Disabled");
+                    setAccountStatusButton("Activate");
+                }
+            }).catch((err) => {
+                console.log(err);
+            })
+            
         }
     }
 

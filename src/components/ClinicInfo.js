@@ -6,6 +6,9 @@ import '../assets/css/ClinicInfo.css';
 
 import getClinicInfo from "../services/admin.service";
 
+import blockClinics from "../services/admin.service";
+import activeClinics from "../services/admin.service";
+
 function ClinicInfo(props) {
 
     const ID = useState(props.params[0]);
@@ -59,16 +62,28 @@ function ClinicInfo(props) {
     const changeStatusHandler = (event)=>{
         event.preventDefault();
 
+        const id = ID[0];
         // database Update query
-
         if(accountStatusButton === "Activate"){
-            
+            activeClinics.activeClinics(id)
+            .then((response) => {
             setAccountStatus("Active");
             setAccountStatusButton("Deactivate");
-            }
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
         else{
-            setAccountStatus("Disabled");
-            setAccountStatusButton("Activate");
+            blockClinics.blockClinics(id)
+            .then((response) => {
+                if(response.data == "True"){
+                    setAccountStatus("Disabled");
+                    setAccountStatusButton("Activate");
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
         }
     }
 

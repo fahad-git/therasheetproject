@@ -6,6 +6,10 @@ import '../assets/fonts/ionicons.min.css';
 import '../assets/css/Admin.css';
 
 import getAllExercises from '../services/director.service';
+import removeExercise from "../services/director.service";
+import addExerciseSuperType from "../services/director.service";
+import addExerciseSubType from "../services/director.service"; 
+import addIndividualExercise from "../services/director.service";
 
 function AddExercises() {
 
@@ -59,15 +63,15 @@ function AddExercises() {
     useEffect(()=>{
         getAllExercises.getAllExercises()
         .then((response) => {
+            console.log("Data: ");
             console.log(response.data);
-            // setExerciseData(response.data)
+            setExerciseData(response.data);
         }).catch((err) => {
             console.log(err);
         })
     },[]);
 
     const superTypeHandler = (event) => {
-       
         let superTypeName = event.target.value;
         document.getElementById("subtypeid").selectedIndex = 0;
         document.getElementById("exercisetypes").selectedIndex = 0;
@@ -93,17 +97,18 @@ function AddExercises() {
         setExerciseName(["none", "", "block"]);
 
         for(let obj of exerciseData){
-            if(obj["supertype"] === superTypeName){
-                setSubTypes(obj["subtype"])
+            if(obj["supTypeName"] === superTypeName){
+                console.log(obj["supTypeName"])
+                console.log(obj["exerciseSubTypes"]);
+                setSubTypes(obj["exerciseSubTypes"])
             }
-        }
-        
-
+        }        
     }
 
     const subTypeHandler = (event) => {
         
         // let superTypeName = document.getElementById('supertypeid').value;
+
         let superTypeName = superType[1];
         let subTypeName = event.target.value;
        
@@ -126,10 +131,15 @@ function AddExercises() {
         }
 
         for(let obj of exerciseData){
-            if(obj["supertype"] === superTypeName){
-                for(let subObj of obj["subtype"]){
-                    if(subObj["type"] === subTypeName)
-                        setExercises(subObj["exercises"])
+            if(obj["supTypeName"] === superTypeName){
+                for(let subObj of obj["exerciseSubTypes"]){
+                    if(subObj["subTypeName"] === subTypeName)
+                    {
+                        let exercises = []
+                        for(let exName of subObj["exercise"])
+                            exercises.push(exName);
+                        setExercises(exercises)
+                    }
                 }
             }
         }
@@ -149,7 +159,7 @@ function AddExercises() {
         }
         
         toggleRemoveDisabled(false);
-        toggleAddDisabled(false);
+        toggleAddDisabled(true);
 
         let superTypeName = superType[1].trim() ;
         let subTypeName = subType[1].trim();
@@ -199,16 +209,24 @@ function AddExercises() {
 
         let isNewSuperType = true;
         let isNewSubType = true;
+        // console.log(exerciseData);
 
+        let exSupId = -1;
+        let exSubId = -1;
+ 
         for(let i=0; i < exerciseData.length; i++){
-            if(exerciseData[i]["supertype"] === superType[1]){
+            if(exerciseData[i]["supTypeName"] === superType[1]){
                 isNewSuperType = false;
-                for(let j=0; j < exerciseData[i]["subtype"].length; j++){
-                    if(exerciseData[i]["subtype"][j]["type"] === subType[1]){
+                exSupId = parseInt(exerciseData[i]["exSupId"] );
+                for(let j=0; j < exerciseData[i]["exerciseSubTypes"].length; j++){
+                    if(exerciseData[i]["exerciseSubTypes"][j]["subTypeName"] === subType[1]){
                         isNewSubType = false;
-                        var already = exerciseData[i]["subtype"][j]["exercises"]
-                        exerciseData[i]["subtype"][j]["exercises"] = [...new Set([...already, ...[exerciseName[1]]])];
-                        setExerciseData(exerciseData);                
+                        exSubId = parseInt(exerciseData[i]["exerciseSubTypes"][j]["exSubId"]);
+                        // var already = []
+                        //     for(let k=0; k < exerciseData[i]["exerciseSubTypes"][j]["exercise"].length; k++)
+                        //         already.push(exerciseData[i]["exerciseSubTypes"][j]["exercise"]["name"]);
+                        // exerciseData[i]["exerciseSubTypes"][j]["exercises"] = [...new Set([...already, ...[exerciseName[1]]])];
+                        // setExerciseData(exerciseData);           
                     }
                 }
             }
@@ -223,18 +241,64 @@ function AddExercises() {
         document.getElementById("exercisetextid").value="";
 
         if(isNewSuperType === true){
-            let obj ={
-                    "supertype": superType[1],
-                    "subtype": [
-                        {
-                        "type": subType[1],
-                        "exercises": [exerciseName[1]]
-                        }
-                    ]
-                }
+            console.log("New Super Type");
+            let obj = {
+                "supTypeName": superType[1],
+                "exerciseSubTypes": [
+                    {
+                        "subTypeName": subType[1],
+                        "exercise": [
+                            {
+                                "name": exerciseName[1],
+                                "exerciseTemplates": [],
+                                "patientExercises": []
+                            }
+                    
+                        ]
+                    }
+                ]
+            }
+
+            addExerciseSuperType.addExerciseSuperType(obj)
+            .then((response) => {
+                console.log("Res:")
+                console.log(response.data);
+                getAllExercises.getAllExercises()
+                .then((r) => {
+                    console.log("Updated Data From Super Type");
+                    console.log(r.data);
+                    setExerciseData(r.data);
+                    document.getElementById("supertypeid").selectedIndex = 0;
+                    document.getElementById("subtypeid").selectedIndex = 0;
+                    document.getElementById("exercisetypes").selectedIndex = 0;
+                    forceUpdate();
+                }).catch((err) => {
+                    console.log("Error: " + err);
+                })
+            }
+            ).catch((err) => {
+                console.log("Error: " + err);
+            });
+
+            // let obj ={
+            //         "supTypeName": superType[1],
+            //         "exerciseSubTypes": [
+            //             {
+            //             "subTypeName": subType[1],
+            //             "exercise": [
+            //                 {
+            //                     "name":exerciseName[1]
+            //                 }
+            //                 ]
+            //             }
+            //         ]
+            //     }
             
-            exerciseData.push(obj);
-            setExerciseData(exerciseData);
+            // exerciseData.push(obj);
+            // setExerciseData(exerciseData);
+
+
+
             toggleAddDisabled(true);
             forceUpdate();
             return;
@@ -243,13 +307,49 @@ function AddExercises() {
             
         if(isNewSubType === true){
             for(let i=0; i < exerciseData.length; i++){
-                if(exerciseData[i]["supertype"] === superType[1]){
-
+                if(exerciseData[i]["supTypeName"] === superType[1]){
                     let obj = {
-                        "type": subType[1],
-                        "exercises": [exerciseName[1]]
-                        }
-                    exerciseData[i]["subtype"].push(obj);
+                        "subTypeName": subType[1],
+                        "exercise": [
+                             {
+                                "name": exerciseName[1],
+                                "exerciseTemplates": [],
+                                "patientExercises": []
+                            }
+                        ],
+                        "exSupId": exSupId
+                    }
+
+                    addExerciseSubType.addExerciseSubType(obj)
+                    .then((response) => {
+                        console.log("Res:")
+                        console.log(response.data);
+                        getAllExercises.getAllExercises()
+                        .then((r) => {
+                            console.log("Updated Data From Super Type");
+                            console.log(r.data);
+                            setExerciseData(r.data);
+                            document.getElementById("supertypeid").selectedIndex = 0;
+                            document.getElementById("subtypeid").selectedIndex = 0;
+                            document.getElementById("exercisetypes").selectedIndex = 0;
+                            forceUpdate();
+                        }).catch((err) => {
+                            console.log("Error: " + err);
+                        })
+                    }
+                    ).catch((err) => {
+                        console.log("Error: " + err);
+                    });
+
+                    // let obj = {
+                    //     "subTypeName": subType[1],
+                    //     "exercise": [
+                    //         {
+                    //             "name":exerciseName[1]
+                    //         }
+                    //         ]
+                    //     }
+                    // exerciseData[i]["exerciseSubTypes"].push(obj);
                     setExerciseData(exerciseData); 
                     forceUpdate();                               
                     return;
@@ -257,12 +357,39 @@ function AddExercises() {
             }
         }
 
+        let exerciseEntry = {
+            "name": exerciseName[1],
+            "exSubId": exSubId,
+            "exerciseTemplates": [],
+            "patientExercises": []
+        }
+
+        //In case want to  add individual exercise
+        addIndividualExercise.addIndividualExercise(exerciseEntry)
+        .then((response) => {
+            console.log("Res:")
+            console.log(response.data);
+            getAllExercises.getAllExercises()
+            .then((r) => {
+                console.log("Exercise Added");
+                console.log(r.data);
+                setExerciseData(r.data);
+                document.getElementById("supertypeid").selectedIndex = 0;
+                document.getElementById("subtypeid").selectedIndex = 0;
+                document.getElementById("exercisetypes").selectedIndex = 0;
+                forceUpdate();
+            }).catch((err) => {
+                console.log("Error: " + err);
+            })
+        }
+        ).catch((err) => {
+            console.log("Error: " + err);
+        });
 
         forceUpdate();
     }
 
     const removeExerciseHandler = () => {
-        let index = -1;
 
         // console.log("Super: " + superType[1] + " Sub: " + subType[1] + " Ex: " + exerciseName[1]);
         if( superType[1].trim() === "" || superType[1].trim() === "" || exerciseName[1].trim() === "")
@@ -271,28 +398,50 @@ function AddExercises() {
             return;
         }
 
-        
+        let exerciseId = -1;
+
         for(let i=0; i < exerciseData.length; i++){
-            if(exerciseData[i]["supertype"] === superType[1]){
-                for(let j=0; j < exerciseData[i]["subtype"].length; j++){
-                    if(exerciseData[i]["subtype"][j]["type"] === subType[1]){
-                        index = exerciseData[i]["subtype"][j]["exercises"].indexOf(exerciseName[1]);
-                        console.log(exerciseData[i]["subtype"][j]["exercises"].splice(index,1));
-                        if(exerciseData[i]["subtype"][j]["exercises"].length == 0)
-                            exerciseData[i]["subtype"].splice(j, 1)
-                        // console.log(JSON.stringify(exerciseData));
+            if(exerciseData[i]["supTypeName"] === superType[1]){
+                for(let j=0; j < exerciseData[i]["exerciseSubTypes"].length; j++){
+                    if(exerciseData[i]["exerciseSubTypes"][j]["subTypeName"] === subType[1]){
+                        for(let k=0; k < exerciseData[i]["exerciseSubTypes"][j]["exercise"].length; k++){
+                            if(exerciseData[i]["exerciseSubTypes"][j]["exercise"][k]["name"] === exerciseName[1] )
+                                exerciseId = parseInt(exerciseData[i]["exerciseSubTypes"][j]["exercise"][k]["exerciseId"])
+                        }
+                        //     console.log(exerciseData[i]["exerciseSubTypes"][j]["exercises"].splice(index,1));
+                        // if(exerciseData[i]["exerciseSubTypes"][j]["exercises"].length == 0)
+                        //     exerciseData[i]["exerciseSubTypes"].splice(j, 1)
                     }
                 }
             }
-            if(exerciseData[i]["subtype"].length == 0)
-            exerciseData.splice(i, 1);
+            // if(exerciseData[i]["exerciseSubTypes"].length == 0)
+            // exerciseData.splice(i, 1);
         }
-        setExerciseData(exerciseData);
-        document.getElementById("supertypeid").selectedIndex = 0;
-        document.getElementById("subtypeid").selectedIndex = 0;
-        document.getElementById("exercisetypes").selectedIndex = 0;
-        toggleRemoveDisabled(true);
-        forceUpdate();
+
+        removeExercise.removeExercise(exerciseId)
+        .then((response) => {
+            if(response.data){
+
+                getAllExercises.getAllExercises()
+                .then((r) => {
+                    console.log("Data: " +response.data);
+                    setExerciseData(r.data);
+                    document.getElementById("supertypeid").selectedIndex = 0;
+                    document.getElementById("subtypeid").selectedIndex = 0;
+                    document.getElementById("exercisetypes").selectedIndex = 0;
+                    toggleRemoveDisabled(true);
+                    forceUpdate();
+
+
+                }).catch((err) => {
+                    console.log(err);
+                })
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
+
+
     }
 
     const goBackHandler = () => {
@@ -313,19 +462,19 @@ function AddExercises() {
 
                                     <div className="col-12 order-2 col-sm-6 order-sm-1">
                                         
-                                    {exerciseData.map( ({supertype, subtype}, index) =>  (<div key={"outer"+index}  style={{textAlign:"left", marginTop:"40px"}}>
-                                            <div key={"supertype"+index} style={{backgroundColor:"white", color:background_color, fontSize:"24px", fontWeight:"bold", marginBottom:"10px", marginTop:"10px"}}>{supertype}</div>
+                                    {exerciseData.map( ({supTypeName, exerciseSubTypes}, index) =>  (<div key={"outer"+index}  style={{textAlign:"left", marginTop:"40px"}}>
+                                            <div key={"supertype"+index} style={{backgroundColor:"white", color:background_color, fontSize:"24px", fontWeight:"bold", marginBottom:"10px", marginTop:"10px"}}>{supTypeName}</div>
                                             {/* this is adding subtypes */}
                                             <hr style={{width:"100%", color:"black", backgroundColor:"black", padding:"0px 0px !important", margin:"0px 0px !important", height:"0px !important"}}/>
 
-                                            {subtype.map( ({type, exercises}, index) =>  (<div key={"outer"+index}  style={{textAlign:"left", marginTop:"10px"}}>
-                                                <div key={"type"+index} style={{backgroundColor:"white", color:background_color, fontSize:"18px", fontWeight:"bold", textDecorationLine:"underline"}}>{type}</div>
+                                            {exerciseSubTypes.map( ({subTypeName, exercise}, index) =>  (<div key={"outer"+index}  style={{textAlign:"left", marginTop:"10px"}}>
+                                                <div key={"type"+index} style={{backgroundColor:"white", color:background_color, fontSize:"18px", fontWeight:"bold", textDecorationLine:"underline"}}>{subTypeName}</div>
                                                 {/* this is adding subtypes */}
                                                  
-                                                {exercises.map( (sub_type, i) => <div key={"inner"+i}>
+                                                {exercise.map( ({name}, i) => <div key={"inner"+i}>
                                                             {/* <hr style={{width:"100%", color:"black", backgroundColor:"black", padding:"0px !important", margin:"0px !important", height:"0px !important"}}/> */}
  
-                                                            <div key={"exercises"+i} className="col-12" style={{backgroundColor:"white", color:"black", height:"35px", lineHeight: "35px", textAlign:"center", fontSize:"2.5vmin"}}>{sub_type}</div>
+                                                            <div key={"exercises"+i} className="col-12" style={{backgroundColor:"white", color:"black", height:"35px", lineHeight: "35px", textAlign:"center", fontSize:"2.5vmin"}}>{name}</div>
                                                             </div>
                                                 )}
                                             </div>)   
@@ -345,8 +494,8 @@ function AddExercises() {
                                                     {/*<option className="dropoptions" value="" style={{backgroundColor:"white", color:"black"}} defaultValue>Exercise Types2</option>  
                                                     <option className="dropoptions" value="" style={{backgroundColor:"white", color:"black"}} defaultValue>Exercise Types</option>    */}
                                                         {
-                                                        exerciseData.map( ({supertype, subtype}, index) => {
-                                                             return <option key={"supertype"+index} className="dropoptions" value={supertype} style={{backgroundColor:"white", color:"black"}}>{supertype}</option> 
+                                                        exerciseData.map( ({supTypeName}, index) => {
+                                                             return <option key={"supertype"+index} className="dropoptions" value={supTypeName} style={{backgroundColor:"white", color:"black"}}>{supTypeName}</option> 
                                                                
                                                             })
                                                         }
@@ -362,8 +511,8 @@ function AddExercises() {
                                                 <select className="btn btn-primary dropdown-toggle" id="subtypeid" type="button" style={{width:"100%", backgroundColor:background_color, display:subType[2] }} onChange={subTypeHandler}>
                                                     <option className="dropoptions" value="" style={{backgroundColor:"white", color:"black"}} defaultValue>Sub Type</option> 
                                                         {
-                                                        subTypes.map( ({type}, index) => {
-                                                             return <option key={"subtype"+index} className="dropoptions" value={type} style={{backgroundColor:"white", color:"black"}}>{type}</option> 
+                                                        subTypes.map( ({subTypeName}, index) => {
+                                                             return <option key={"subTypeName"+index} className="dropoptions" value={subTypeName} style={{backgroundColor:"white", color:"black"}}>{subTypeName}</option> 
                                                                
                                                             })
                                                         }
@@ -379,8 +528,8 @@ function AddExercises() {
                                                 <select className="btn btn-primary dropdown-toggle" id="exercisetypes" type="button" style={{width:"100%", backgroundColor:background_color, display:exerciseName[2] }} onChange={exercisesHandler}>
                                                     <option className="dropoptions" value="" style={{backgroundColor:"white", color:"black"}} defaultValue>Exercises</option> 
                                                         {
-                                                        exercises.map( (exName, index) => {
-                                                             return <option key={"exName"+index} className="dropoptions" value={exName} style={{backgroundColor:"white", color:"black"}}>{exName}</option> 
+                                                        exercises.map( ({name}, index) => {
+                                                             return <option key={"name"+index} className="dropoptions" value={name} style={{backgroundColor:"white", color:"black"}}>{name}</option> 
                                                             })
                                                         }
                                                     <option className="dropoptions" value="Others" style={{backgroundColor:"white", color:"black"}}>Others</option>  

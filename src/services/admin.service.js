@@ -1,7 +1,7 @@
 import axios from "axios";
 import authHeader from "./auth-header";
 
-const API_URL = "http://192.168.1.105:8090/";
+const API_URL = "http://192.168.1.103:8090/";
 // const API_URL = "http://localhost:8000/";
 
 
@@ -32,11 +32,21 @@ const resetPassword = (obj) => {
   return axios.get(API_URL + "resetPassword", { headers: authHeader(), params:obj } );
 }
 
+const activeClinics = (id) => {
+  return axios.get(API_URL + "admin/activeClinicById", { headers: authHeader(), params:{"id":id} } );
+}
+const blockClinics = (id) => {
+  // console.log("ID: "+id);
+  return axios.get(API_URL + "admin/blockClinicById", { headers: authHeader(), params:{"id":id} } );
+}
+
 export default {
     getClinicInfo,
     getAdminInfo,
     updateAdminInfo,
     uploadProfilePicture,
     validatePassword,
-    resetPassword
+    resetPassword,
+    activeClinics,
+    blockClinics
   };

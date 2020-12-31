@@ -71,8 +71,10 @@ function AdminInfo(props){
                 'file', 
                selectedFile
             );
+            console.log("Org: "+selectedFile);
+            console.log("Enc: " + btoa(selectedFile));
+            console.log("Dec: " + atob(selectedFile));
 
-           
 
             validatePassword.validatePassword({"password": password[1].trim()})
             .then( (passResponse) => {

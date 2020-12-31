@@ -17,7 +17,6 @@ function App() {
   var [accountType, setAccountType] = useState("");
   var [profileUrl, setAccountProfileUrl] = useState("");
 
-
   const userDetails = [setAccountUsername, setAccountType, setAccountProfileUrl];
 
   return (

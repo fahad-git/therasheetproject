@@ -4,6 +4,9 @@ import '../assets/bootstrap/css/bootstrap.min.css';
 import '../assets/fonts/ionicons.min.css';
 import '../assets/css/ClinicInfo.css';
 
+import checkUsernameAvailability from "../services/director.service";
+import registerClinician from "../services/director.service";
+
 function AddNewCLinician () {
 
     var [clinicianName, setClinicianName] = useState("Enter Clinician Name");
@@ -14,7 +17,7 @@ function AddNewCLinician () {
     var [confirmPassword, setConfirmPassword] = useState('Confirm Password');
 
 
-    var [status, setStatus] = useState('');
+    var [status, setStatus] = useState(['','red']);
     var [accountStatusButton, setAccountStatusButton] = useState('Add');
     var [disableFields, disableFieldsToggle] = useState(false);
 
@@ -28,28 +31,70 @@ function AddNewCLinician () {
     const updateUserName = e => setUserName(e.target.value);
     const updateEmailAddress = e => setEmailAddress(e.target.value);
     const updatePhoneNumber = e => setPhoneNumber(e.target.value);
-    const updateNewPassword = e => setPhoneNumber(e.target.value);
+    const updateNewPassword = e => setNewPassword(e.target.value);
     const updateConfirmPassword = e => setConfirmPassword(e.target.value);
 
 
     const ButtonColor = "rgba(4, 13, 43, 0.8)";
 
-    const changeStatusHandler = (event)=>{
+    const registerClinicianHandler = (event)=>{
         event.preventDefault();
         // database Update query
+        setClinicianName(clinicianName.trim());
+        setUserName(userName.trim());
+        setEmailAddress(emailAddress.trim());
+        setPhoneNumber(phoneNumber.trim());
+        setNewPassword(newPassword.trim());
 
-        
-        console.log();
+        if(clinicianName === "Enter Clinician Name" || clinicianName === "" ||
+            userName === "Enter Username" || userName === "" ||
+            emailAddress === 'Enter Email Address' || emailAddress === '' ||
+            phoneNumber === 'Enter Phone Number' || phoneNumber === '' ||
+            newPassword === 'Enter Password' || newPassword === ''){
+
+            setStatus(['Fields can not be null', 'red']);
+            return;
+        }
+
+        let data = {
+            "name": clinicianName,
+            "email": emailAddress,
+            "contact": phoneNumber,
+            "imagePath": "",
+            "login": {
+                "username": userName,
+                "password": newPassword,
+                "userType": "clinician",
+                "status": "Active"
+            },
+            "patientRecords": []
+        }
+
+        registerClinician.registerClinician(data)
+        .then((response) => {
+            if(response.data !== null){
+                setStatus([response.data["name"] + ' added sucessfully', 'green']);
+            }else{
+                setStatus(['Failed to add clinician', 'red']);
+            }
+        }).catch((err) => {
+            setStatus(['Failed to add clinician', 'red']);
+        })       
     }
 
     const verifyUserName = () =>{
         setUserName(userName.trim());
         // Check Username availability
+        checkUsernameAvailability.checkUsernameAvailability(userName)
+        .then((response) => {
+            if(response.data == "True")
+                setUserNameErrorMessage(['block',"Username available", "green"])
+            else   
+                setUserNameErrorMessage(['block',"Username not available", "red"])
 
-        if(userName === "fahad" || userName === "Fahad")
-            setUserNameErrorMessage(['block',"Username available", "green"])
-        else
+        }).catch((err) => {
             setUserNameErrorMessage(['block',"Username not available", "red"])
+        })
             
     }
 
@@ -79,7 +124,7 @@ function AddNewCLinician () {
     return <div>
                  <div className="clinicinfo">
                      <div className="container ">
-                         <form onSubmit={changeStatusHandler}>
+                         <form onSubmit={registerClinicianHandler}>
                             <div className="row no-gutters">
                                  <div className="col-5" ><label className="form-control" >Clinician Name</label></div>
                                  <div className="col-7" style={{padding: "0px 10px"}}><textarea disabled={disableFields} rows="1" className="form-control" style={{resize: "none"}} type="text" placeholder={clinicianName} onChange={updateClinicianName}/></div>
@@ -132,7 +177,7 @@ function AddNewCLinician () {
                             </div>
 
                             <div className="row no-gutters">
-                                <div className="col-8"><label id="status" >{status}</label></div>
+                                <div className="col-8"><label id="status" style={{color:status[1]}} >{status[0]}</label></div>
                                 <div className="col-4" style={{padding: "0px 10px"}}><button className="btn btn-primary text-center" type="submit" style={{backgroundColor:ButtonColor, fontSize:"calc(2px + 2vmin)", width:"100%", padding: "0px 0px !important"}}>{accountStatusButton}</button></div>
                             </div>
 
