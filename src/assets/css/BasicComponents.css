@@ -1,0 +1,198 @@
+/* Home Component CSS Starts Here*/
+.home{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    background: radial-gradient(at center center, #2d7e9270 0%, #1c40617c 100%), url('../img/backgroundImg.jpg');
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+}
+
+.home h1{
+    font-size: calc(18px + 5vmin);
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: normal;
+    letter-spacing: 2px;
+}
+
+.home h2{
+    font-size: calc(10px + 2vmin);
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: lighter;
+    letter-spacing: 4px;
+}
+
+.home p{
+    color: rgba(255, 255, 255, 1);
+    text-align: center;
+    letter-spacing: 4px;
+    font-size: calc(6px + 2vmin);
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+
+.home_btn_login{
+    border: white solid 2px;
+    background-color: transparent;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 10px 50px;
+    margin: 0 10px;
+    outline: "none";
+}
+
+.home_btn_register{
+    border: white solid 1px;
+    background-color: white; 
+    color: rgba(26, 108, 122, 1);
+    padding: 10px 50px;
+    margin: 0 10px;
+    outline: "none";
+}
+
+.home_button{
+    display: flex;
+    align-self: center;
+    text-align: center;
+    text-decoration: solid;
+}
+
+@media screen and (max-width: 300px){
+    .home_button{
+        display: flex;
+        flex-direction: column;
+    }
+    .home_btn_register{
+        margin-top: 20px;
+    }
+}
+
+/* Home Component CSS End Here*/
+
+/* About Component CSS Starts Here */
+
+.about{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    background: radial-gradient(at center center, #2d7e9270 0%, #1c40617c 100%), url('../img/backgroundImg.jpg');
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+}
+
+.about h1{
+    font-size: calc(18px + 5vmin);
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: normal;
+    letter-spacing: 2px;
+}
+
+.about h2{
+    font-size: calc(10px + 2vmin);
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: lighter;
+    letter-spacing: 4px;
+}
+
+.about p{
+    color: rgba(255, 255, 255, 1);
+    text-align: center;
+    letter-spacing: 4px;
+    font-size: calc(6px + 2vmin);
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+
+
+/* About Component CSS End Here*/
+
+/* Services Component CSS Starts Here */
+
+
+.services{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    background: radial-gradient(at center center, #2d7e9270 0%, #1c40617c 100%), url('../img/backgroundImg.jpg');
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+}
+
+.services h1{
+    font-size: calc(18px + 5vmin);
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: normal;
+    letter-spacing: 2px;
+}
+
+.services h2{
+    font-size: calc(10px + 2vmin);
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: lighter;
+    letter-spacing: 4px;
+}
+
+.services p{
+    color: rgba(255, 255, 255, 1);
+    text-align: center;
+    letter-spacing: 4px;
+    font-size: calc(6px + 2vmin);
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+
+/* Services Component CSS End Here */
+
+/* Contact Component CSS Starts Here */
+
+
+.contact{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    background: radial-gradient(at center center, #2d7e9270 0%, #1c40617c 100%), url('../img/backgroundImg.jpg');
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+}
+
+.contact h1{
+    font-size: calc(18px + 5vmin);
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: normal;
+    letter-spacing: 2px;
+}
+
+.contact h2{
+    font-size: calc(10px + 2vmin);
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: lighter;
+    letter-spacing: 4px;
+}
+
+.contact p{
+    color: rgba(255, 255, 255, 1);
+    text-align: center;
+    letter-spacing: 4px;
+    font-size: calc(6px + 2vmin);
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+
+.login-modal .modal-backdrop{
+    background: transparent !important;
+} 
+
+.login-modal .modal-content {
+    border:0px !important;
+}
