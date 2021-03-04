@@ -81,7 +81,7 @@ function AddNewCLinician () {
             }else{
                 setStatus(['Failed to add clinician', 'red']);
             }
-            console.log(response.data);
+            // console.log(response.data);
         }).catch((err) => {
             setStatus(['Failed to add clinician', 'red']);
         });       

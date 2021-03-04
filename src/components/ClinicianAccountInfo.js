@@ -30,13 +30,13 @@ function ClinicianAccountInfo(props){
     useEffect(()=>{
         getClinicianInfo.getClinicianInfo()
         .then(response => {
-            console.log(response.data);
+            // console.log(response.data);
             setUserName(response.data["login"]["username"])
             setClinicianName(response.data["name"]);
             setEmailAddress(response.data["email"])
             // setStatus(response.data["login"]["status"])
         })
-        .catch(err => console.log(err))
+        .catch(err => console.log(''))
     },[]);
 
     const updatInformationHandler = (event) => {
@@ -48,8 +48,8 @@ function ClinicianAccountInfo(props){
             setAccountStatusButton("Update");
         }else{
 
-            console.log("Obj:")
-            console.log(selectedFile)
+            // console.log("Obj:")
+            // console.log(selectedFile)
 
             if(password[1].trim() === ''){
                 setStatus("Type Password");
@@ -83,8 +83,8 @@ function ClinicianAccountInfo(props){
             // return;
             uploadProfilePicture.uploadProfilePicture(data)
             .then((response) => {
-                console.log("Clinician Object:");
-                console.log(response.data);
+                // console.log("Clinician Object:");
+                // console.log(response.data);
                 if(response.data !== []){
                     var user = JSON.parse(localStorage.getItem("user"));
                     // let profileURL = "data:" + response.data.file.type + ";base64," + response.data.file.data;
@@ -110,7 +110,7 @@ function ClinicianAccountInfo(props){
                     setStatus('Failed to update try again with correct password');
             }).catch((err) => {
                 setStatus('Failed to update try again');
-                console.log(err);
+                // console.log(err);
             });
         }
     }

@@ -41,7 +41,7 @@ function AddNewPatient () {
         }
 
         setStatus("");
-        console.log(selectedFile);
+        // console.log(selectedFile);
 
 
         // var file = new File(["Hello World"], "foo.txt", {
@@ -68,7 +68,7 @@ function AddNewPatient () {
         //     "file":selectedFile
         // }
 
-         console.log(data);
+        //  console.log(data);
 
         addNewPatient.addNewPatient(data)
         .then(response => {
@@ -81,7 +81,8 @@ function AddNewPatient () {
         })
         .catch(err => {
             setStatus("Failed to add patient");
-            console.log(err)});
+            // console.log(err)
+        });
 
     }
 
@@ -95,7 +96,7 @@ function AddNewPatient () {
             setProtocol([file.name,reader.result]);
             }
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             return;
         }
     }

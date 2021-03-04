@@ -49,7 +49,7 @@ function ClinicDirectorInfo(props){
             setExpiryDate(response.data["expiryDate"].toString().substring(0, 10));
             setNumberOfClinicians(response.data["numberOfClinicians"]);
         }))
-        .catch(err=>console.log(err))
+        .catch(err=>console.log(''))
     },[]);
 
     const updatInformationHandler = (event) => {
@@ -61,8 +61,8 @@ function ClinicDirectorInfo(props){
             setAccountStatusButton("Update");
         }else{
 
-            console.log("Obj:")
-            console.log(selectedFile)
+            // console.log("Obj:")
+            // console.log(selectedFile)
             if(password[1].trim() === ''){
                 setStatus("Type Password");
                 return;
@@ -97,8 +97,8 @@ function ClinicDirectorInfo(props){
             // return;
             uploadProfilePicture.uploadProfilePicture(data)
             .then((response) => {
-                console.log("Clinic Object:");
-                console.log(response.data);
+                // console.log("Clinic Object:");
+                // console.log(response.data);
                 if(response.data !== []){
                     var user = JSON.parse(localStorage.getItem("user"));
                     // let profileURL = "data:" + response.data.file.type + ";base64," + response.data.file.data;
@@ -127,7 +127,7 @@ function ClinicDirectorInfo(props){
                     setStatus('Failed to update try again with correct password');
             }).catch((err) => {
                 setStatus('Failed to update try again');
-                console.log(err);
+                // console.log(err);
             });
         }
     }

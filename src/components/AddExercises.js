@@ -63,11 +63,12 @@ function AddExercises() {
     useEffect(()=>{
         getAllExercises.getAllExercises()
         .then((response) => {
-            console.log("Data: ");
-            console.log(response.data);
+            // console.log("Data: ");
+            // console.log(response.data);
             setExerciseData(response.data);
         }).catch((err) => {
-            console.log(err);
+            console.log('');
+            // console.log(err);
         })
     },[]);
 
@@ -98,9 +99,9 @@ function AddExercises() {
 
         for(let obj of exerciseData){
             if(obj["supTypeName"] === superTypeName){
-                console.log(obj["supTypeName"])
-                console.log(obj["exerciseSubTypes"]);
-                setSubTypes(obj["exerciseSubTypes"])
+                // console.log(obj["supTypeName"])
+                // console.log(obj["exerciseSubTypes"]);
+                setSubTypes(obj["exerciseSubTypes"]);
             }
         }        
     }
@@ -205,7 +206,7 @@ function AddExercises() {
             alert("select all values before add");
             return;
         }
-        console.log("Super: " + superType[1] + " Sub: " + subType[1] + " exercise: " + exerciseName[1])
+        // console.log("Super: " + superType[1] + " Sub: " + subType[1] + " exercise: " + exerciseName[1])
 
         let isNewSuperType = true;
         let isNewSubType = true;
@@ -241,7 +242,7 @@ function AddExercises() {
         document.getElementById("exercisetextid").value="";
 
         if(isNewSuperType === true){
-            console.log("New Super Type");
+            // console.log("New Super Type");
             let obj = {
                 "supTypeName": superType[1],
                 "exerciseSubTypes": [
@@ -261,23 +262,25 @@ function AddExercises() {
 
             addExerciseSuperType.addExerciseSuperType(obj)
             .then((response) => {
-                console.log("Res:")
-                console.log(response.data);
+                // console.log("Res:")
+                // console.log(response.data);
                 getAllExercises.getAllExercises()
                 .then((r) => {
-                    console.log("Updated Data From Super Type");
-                    console.log(r.data);
+                    // console.log("Updated Data From Super Type");
+                    // console.log(r.data);
                     setExerciseData(r.data);
                     document.getElementById("supertypeid").selectedIndex = 0;
                     document.getElementById("subtypeid").selectedIndex = 0;
                     document.getElementById("exercisetypes").selectedIndex = 0;
                     forceUpdate();
                 }).catch((err) => {
-                    console.log("Error: " + err);
+                    console.log('');
+                    // console.log("Error: " + err);
                 })
             }
             ).catch((err) => {
-                console.log("Error: " + err);
+                console.log('');
+                // console.log("Error: " + err);
             });
 
             // let obj ={
@@ -321,23 +324,25 @@ function AddExercises() {
 
                     addExerciseSubType.addExerciseSubType(obj)
                     .then((response) => {
-                        console.log("Res:")
-                        console.log(response.data);
+                        // console.log("Res:")
+                        // console.log(response.data);
                         getAllExercises.getAllExercises()
                         .then((r) => {
-                            console.log("Updated Data From Super Type");
-                            console.log(r.data);
+                            // console.log("Updated Data From Super Type");
+                            // console.log(r.data);
                             setExerciseData(r.data);
                             document.getElementById("supertypeid").selectedIndex = 0;
                             document.getElementById("subtypeid").selectedIndex = 0;
                             document.getElementById("exercisetypes").selectedIndex = 0;
                             forceUpdate();
                         }).catch((err) => {
-                            console.log("Error: " + err);
+                            console.log('');
+                            // console.log("Error: " + err);
                         })
                     }
                     ).catch((err) => {
-                        console.log("Error: " + err);
+                        console.log('');
+                        // console.log("Error: " + err);
                     });
 
                     // let obj = {
@@ -366,23 +371,25 @@ function AddExercises() {
         //In case want to  add individual exercise
         addIndividualExercise.addIndividualExercise(exerciseEntry)
         .then((response) => {
-            console.log("Res:")
-            console.log(response.data);
+            // console.log("Res:")
+            // console.log(response.data);
             getAllExercises.getAllExercises()
             .then((r) => {
-                console.log("Exercise Added");
-                console.log(r.data);
+                // console.log("Exercise Added");
+                // console.log(r.data);
                 setExerciseData(r.data);
                 document.getElementById("supertypeid").selectedIndex = 0;
                 document.getElementById("subtypeid").selectedIndex = 0;
                 document.getElementById("exercisetypes").selectedIndex = 0;
                 forceUpdate();
             }).catch((err) => {
-                console.log("Error: " + err);
+                console.log('');
+                // console.log("Error: " + err);
             })
         }
         ).catch((err) => {
-            console.log("Error: " + err);
+            console.log('');
+            // console.log("Error: " + err);
         });
 
         forceUpdate();
@@ -423,7 +430,7 @@ function AddExercises() {
 
                 getAllExercises.getAllExercises()
                 .then((r) => {
-                    console.log("Data: " +response.data);
+                    // console.log("Data: " +response.data);
                     setExerciseData(r.data);
                     document.getElementById("supertypeid").selectedIndex = 0;
                     document.getElementById("subtypeid").selectedIndex = 0;
@@ -433,11 +440,13 @@ function AddExercises() {
 
 
                 }).catch((err) => {
-                    console.log(err);
+                    console.log('');
+                    // console.log(err);
                 })
             }
         }).catch((err) => {
-            console.log(err);
+            console.log('');
+            // console.log(err);
         })
 
 

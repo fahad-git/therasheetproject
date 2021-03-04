@@ -46,7 +46,8 @@ function RegistrationForm(){
         // here a call will be called to the server and response will be shown to the user.
         usernameAvailability.usernameAvailability(userName.trim())
         .then((response) => {
-            console.log(response.data)
+            // console.log(response.data)
+
             if(response.data === "True")
             {            
             currentStatus.innerHTML = "Available";
@@ -60,7 +61,8 @@ function RegistrationForm(){
                 setUserName("Not Available");
             }
         }).catch((err) => {
-            console.log(err)
+            // console.log(err)
+            
             currentStatus.innerHTML = "Not Available";
             currentStatus.style.color = "red";
             // alert(username)
@@ -142,15 +144,15 @@ function RegistrationForm(){
             "adminId":1
         }
 
-        console.log(obj);
+        // console.log(obj);
         registerClinic.registerClinic(obj)
         .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
             if(response.data === "True"){
                 setError({
                     "display":"block",
                     "color":"green",
-                    "msg":"Clinic Registered Successfully"
+                    "msg":"Clinic Registered Successfully. Currently your account is disabled until Admin approve your account."
                 })
                 setRegisterBtnDisabled(true);
             }
@@ -161,7 +163,7 @@ function RegistrationForm(){
                     "msg":"Registration Failed"
                 })
         }).catch((err) =>{ 
-            console.log(err)
+            // console.log(err)
             setError({
                 "display":"block",
                 "color":"red",

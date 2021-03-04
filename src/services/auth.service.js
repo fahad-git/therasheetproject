@@ -29,16 +29,16 @@ const login = (username, password, loginCallback) => {
          loginCallback(user.data);
         // return user.data;
       }).catch((err)=>{
-        console.log("Can not find user!")
-        console.log(err);
+        // console.log("Can not find user!")
+        // console.log(err);
         loginCallback(null);
       });
     
      console.log(response.data);
     
     }).catch((err)=>{
-    console.log("Can not find user!");
-    console.log(err);
+    // console.log("Can not find user!");
+    // console.log(err);
     loginCallback(null);
   });
 
@@ -61,13 +61,12 @@ const hello = () => {
   //   });
   
 
-  axios.get(API_URL  + "hello", { headers: { Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ6YWluYWIiLCJleHAiOjE2MDg2MjQzOTEsImlhdCI6MTYwODYyMDc5MX0.-KuFoJqR4HaPzJlBtXz1d4QyO8z7LDndtTwLJnU4kZs" } } )
-  .then((res) => {
-    console.log(res.data)
-  }).catch((err) => {
-    console.log(err);
-  });
-  
+  // axios.get(API_URL  + "hello", { headers: { Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ6YWluYWIiLCJleHAiOjE2MDg2MjQzOTEsImlhdCI6MTYwODYyMDc5MX0.-KuFoJqR4HaPzJlBtXz1d4QyO8z7LDndtTwLJnU4kZs" } } )
+  // .then((res) => {
+  //   console.log(res.data)
+  // }).catch((err) => {
+  //   console.log(err);
+  // });  
 }
 
 

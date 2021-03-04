@@ -60,8 +60,8 @@ function LoginForm() {
 
                 localStorage.removeItem("user");
                 localStorage.setItem("user", JSON.stringify(user));
-                console.log("From Callback:");
-                console.log(user);
+                // console.log("From Callback:");
+                // console.log(user);
                 
                 if(user.accountType.toLowerCase() == "admin")
                     history.push('/admin');

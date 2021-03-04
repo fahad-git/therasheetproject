@@ -35,7 +35,7 @@ function ClinicInfo(props) {
         getClinicInfo.getClinicInfo(ID)
         .then((response) => {
             // API
-           console.log(response.data);
+        //    console.log(response.data);
            setUserName(response.data["userName"]);
            setClinicName(response.data["clinicName"]);
            setOwnerName(response.data["ownerName"]);
@@ -56,8 +56,9 @@ function ClinicInfo(props) {
             
 
           }).catch((err)=>{
-            console.log("Can not find user!");
-            console.log(err);
+            // console.log("Can not find user!");
+            // console.log(err);
+            console.log('')
           });
     }, [])
 
@@ -74,7 +75,8 @@ function ClinicInfo(props) {
             setAccountStatus("Active");
             setAccountStatusButton("Deactivate");
             }).catch((err) => {
-                console.log(err);
+                console.log('');
+                // console.log(err);
             });
         }
         else{
@@ -86,7 +88,8 @@ function ClinicInfo(props) {
                 }
             })
             .catch((err) => {
-                console.log(err);
+                console.log('');
+                // console.log(err);
             });
         }
     }

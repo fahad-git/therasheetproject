@@ -64,26 +64,26 @@ function Exercise(){
     useEffect(()=>{
         getAllExercises.getAllExercises()
         .then((response) => {
-            console.log("Exercises:");
-            console.log(response.data);
+            // console.log("Exercises:");
+            // console.log(response.data);
             setExerciseAllData(response.data);
            
-        }).catch((err) => console.log(err));
+        }).catch((err) => console.log(''));
 
         getAllTemplates.getAllTemplates()
         .then((response) => {
-            console.log("templates");
-            console.log(response.data);
+            // console.log("templates");
+            // console.log(response.data);
             setExerciseTemplates(response.data)
         }).catch((err) => {
-            console.log(err);
+            console.log('');
         })
     }, []);
 
     const loadTemplatesHandler = (event) => {
         // return;
         let templateId = parseInt(event.target.value);
-        console.log("ID: " + templateId);
+        // console.log("ID: " + templateId);
         if("NaN" === String(templateId) ){
             setUserSelectedExercises([])
             return;
@@ -135,8 +135,8 @@ function Exercise(){
                 exercisesBelongsToTemplate.push(temporarySuperTypeObj)
             }
         }
-        console.log("Updates User Selected Object")
-        console.log(exercisesBelongsToTemplate);
+        // console.log("Updates User Selected Object")
+        // console.log(exercisesBelongsToTemplate);
         // here is logic to manage intersection of objects
         setUserSelectedExercises(exercisesBelongsToTemplate);
 
@@ -161,8 +161,8 @@ function Exercise(){
         let subTypId = parseInt(event.target.value);
         if("NaN" === String(subTypId) )
             return;
-        console.log("Ex Data")
-        console.log(exerciseAllData);
+        // console.log("Ex Data")
+        // console.log(exerciseAllData);
         for(let subObject of exerciseTypes)
             if(subObject["exSubId"] === subTypId){
                 let newObject = JSON.parse(JSON.stringify(subObject["exercise"]));
@@ -279,15 +279,15 @@ function Exercise(){
         // console.log(e.target.value);
         // console.log(exerciseValues);
         exerciseValues[id] = e.target.value;
-        console.log(exerciseValues)
+        // console.log(exerciseValues)
         setExerciseValues(exerciseValues);
     }
 
     const removeElementHandler = (superTypeID, subTypeID, exerciseID) => {
-        console.log("All ex:")
-        console.log(superTypeID + " : " + subTypeID + " : " + exerciseID);
-        console.log(userSelectedExercises);
-        console.log(exerciseAllData);
+        // console.log("All ex:")
+        // console.log(superTypeID + " : " + subTypeID + " : " + exerciseID);
+        // console.log(userSelectedExercises);
+        // console.log(exerciseAllData);
         
         for(let i in userSelectedExercises)
         {

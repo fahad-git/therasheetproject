@@ -38,8 +38,8 @@ function Header () {
 
     useEffect(() => {
         if(user) {
-            console.log("From header");
-            console.log(user);
+            // console.log("From header");
+            // console.log(user);
             setAccountType(user.accountType);
             if(user.file !== null){
                 let profileURL = "data:" + user.file.type + ";base64," + user.file.data;

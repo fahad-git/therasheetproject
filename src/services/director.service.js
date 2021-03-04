@@ -52,24 +52,24 @@ const uploadProfilePicture = (data) => {
 const addExerciseSuperType = (obj) => {
   const user = JSON.parse(localStorage.getItem("user"));
   obj["clinicId"] = user.id;
-  console.log("Object:");
-  console.log(JSON.stringify(obj))
+  // console.log("Object:");
+  // console.log(JSON.stringify(obj))
 
   return axios.post(API_URL + "addSuperType", obj, { headers: authHeader() } );
 }
 
 const addExerciseSubType = (obj) => {
-  console.log(JSON.stringify(obj))
+  // console.log(JSON.stringify(obj))
   return axios.post(API_URL + "addSubType", obj,  { headers: authHeader() } );
 }
 
 const addIndividualExercise = (obj) => {
-  console.log(JSON.stringify(obj))
+  // console.log(JSON.stringify(obj))
   return axios.post(API_URL + "addExercise", obj,  { headers: authHeader() } );
 }
 
 const checkUsernameAvailability = (username) => {
-  console.log(username);
+  // console.log(username);
   return axios.get(API_URL + "checkUsernameAvailability", { headers: authHeader(), params:{"username" : username} } );
 }
 

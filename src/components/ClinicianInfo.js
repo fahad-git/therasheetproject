@@ -25,7 +25,7 @@ function ClinicianInfo (props) {
         getClinicianInfo.getClinicianInfo(ID)
         .then((response) => {
             // API
-           console.log(response.data);
+        //    console.log(response.data);
            setUserName(response.data["login"]["username"])
            setClinicianName(response.data["name"]);
            setEmailAddress(response.data["email"])
@@ -40,8 +40,8 @@ function ClinicianInfo (props) {
             
 
           }).catch((err)=>{
-            console.log("Can not find user!")
-            
+            // console.log("Can not find user!")
+            console.log('');            
           });
     }, [])
 
@@ -56,13 +56,14 @@ function ClinicianInfo (props) {
             activeClinician.activeClinician(ID)
             .then((response) => {
                 if(response.data == "True"){
-                    console.log("ID: "+ ID + " Active")
+                    // console.log("ID: "+ ID + " Active")
 
                     setAccountStatus("Active");
                     setAccountStatusButton("Deactivate");
                 }
             }).catch((err) => {
-                console.log(err);
+                console.log('');
+                // console.log(err);
             })
            
             }
@@ -71,12 +72,13 @@ function ClinicianInfo (props) {
             blockClinician.blockClinician(ID)
             .then((response) => {
                 if(response.data == "True"){
-                    console.log("ID: "+ ID + " Blocked")
+                    // console.log("ID: "+ ID + " Blocked");
                     setAccountStatus("Disabled");
                     setAccountStatusButton("Activate");
                 }
             }).catch((err) => {
-                console.log(err);
+                console.log('');
+                // console.log(err);
             })
             
         }

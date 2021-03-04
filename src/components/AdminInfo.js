@@ -29,11 +29,12 @@ function AdminInfo(props){
         getAdminInfo.getAdminInfo()
         .then((response) => {
             // API
-            console.log(response.data);
+            // console.log(response.data);
             setAdminName(response.data["name"]);
             setUserName(response.data["username"]);
           }).catch((err)=>{
-            console.log(err)
+              console.log('');
+            // console.log(err)
           });
     },[])
 
@@ -61,7 +62,7 @@ function AdminInfo(props){
             setAccountStatusButton("Update");
         }else{
 
-            console.log("Obj: "+ selectedFile);
+            // console.log("Obj: "+ selectedFile);
 
             if(password[1].trim() === ''){
                 setStatus("Type Password");
@@ -91,7 +92,7 @@ function AdminInfo(props){
                 return;
             }
 
-            console.log("Name: "+adminName);
+            // console.log("Name: "+adminName);
             data.append('name', adminName);
             data.append('password', password[1]);
 
@@ -99,7 +100,7 @@ function AdminInfo(props){
                                         
             uploadProfilePicture.uploadProfilePicture(data)
             .then((response) => {
-                console.log(response.data);
+                // console.log(response.data);
                 if(response.data !== []){
                     var user = JSON.parse(localStorage.getItem("user"));
                     // let profileURL = "data:" + response.data.file.type + ";base64," + response.data.file.data;
@@ -124,7 +125,7 @@ function AdminInfo(props){
                     setStatus('Failed to update try again with correct password');
             }).catch((err) => {
                 setStatus('Failed to update try again');
-                console.log(err);
+                // console.log(err);
             });
 
                             // Blob conversion 

@@ -151,7 +151,9 @@ function Admin (props) {
                     // }
 
             }).catch((err)=>{
-            console.log(err)
+
+                console.log('');
+            // console.log(err)
             });
     }
     
@@ -162,7 +164,7 @@ function Admin (props) {
         getAdminBoard.getAdminBoard()
             .then((response) => {
                 // API
-                console.log(response.data);
+                // console.log(response.data);
 
             switch(value){
                 case "Blocked Clinics":
@@ -183,14 +185,14 @@ function Admin (props) {
                     setClinicsInformation(active_clinic)
                 break;
                 default:
-                    console.log("Default");
+                    // console.log("Default");
                     setClinicsInformation(response.data)
                     // setClinicsInformation(elems);
                 break;
             }
 
         }).catch((err)=>{
-        console.log("Can not find clinics!")
+        // console.log("Can not find clinics!")
         setClinicsInformation([])
     });
 
@@ -210,10 +212,10 @@ function Admin (props) {
         getAdminBoard.getAdminBoard()
         .then((response) => {
             // API
-            console.log(response.data);
+            // console.log(response.data);
             setClinicsInformation(response.data)
           }).catch((err)=>{
-            console.log("Can not find user!")
+            // console.log("Can not find user!")
             setClinicsInformation([])
           });
     }, [])
@@ -223,11 +225,12 @@ function Admin (props) {
         getAdminInfo.getAdminInfo()
         .then((response) => {
             // API
-            console.log(response.data);
+            // console.log(response.data);
             setAdminName(response.data["name"])
             setUserName(response.data["username"])
           }).catch((err)=>{
-            console.log("Can not find user!")
+              console.log('');
+            // console.log("Can not find user!")
           });
     }, [])
 

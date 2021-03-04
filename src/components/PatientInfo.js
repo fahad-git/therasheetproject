@@ -46,7 +46,7 @@ function PatientInfo (props) {
             setDiagnosis(response.data["diagnosis"]);
             setPrecaution(response.data["precausion"]);
             setDate(response.data["date"]);
-        }).catch((err) => console.log(err));
+        }).catch((err) => console.log(''));
 
     }, []);
 

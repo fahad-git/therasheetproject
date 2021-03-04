@@ -74,7 +74,7 @@ function PatientsView() {
     useEffect(()=>{
         getPatientsForView.getPatientsForView()
         .then((response) => {
-            console.log(response.data)
+            // console.log(response.data)
             let object = []
             for(let obj of response.data){
                 let tmp = {
@@ -88,7 +88,7 @@ function PatientsView() {
             setPatientInformation(object);
         })
         .catch((err) => {
-            console.log(err);
+            console.log('');
         })
     },[])
 

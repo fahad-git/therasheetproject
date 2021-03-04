@@ -49,7 +49,7 @@ function ChangePassword(props){
         }
         resetPassword.resetPassword(obj)
         .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
             // database response if ok
             if(response.data === "True"){
                 status_div.style.color = "green";
@@ -59,7 +59,8 @@ function ChangePassword(props){
                 setStatus("Password Change Request Failed Try Again");
 
         }).catch((err) => {
-            console.log(err);
+            console.log('');
+            // console.log(err);
             status_div.style.color = "red";
             setStatus("Server busy! Please try later");
         })

@@ -205,11 +205,11 @@ function Clinician (props) {
         setSelectedDate(fulldate);
                  // "Today's Patients"
             // let date = "2020-11-11";
-            console.log(fulldate)
+            // console.log(fulldate)
             getPatientsDataByDate.getPatientsDataByDate(fulldate)
             .then((response) => {
-                console.log("Today's Patients")
-                console.log(response.data);
+                // console.log("Today's Patients")
+                // console.log(response.data);
                 let object = []
                 for(let obj of response.data){
                     if(filter === "All" || obj["status"] === filter){
@@ -224,8 +224,8 @@ function Clinician (props) {
 
             setPatientInformation(object);
             }).catch((err)=>{
-            console.log("Can not find clinicians!")
-            console.log(err);
+            // console.log("Can not find clinicians!")
+            // console.log(err);
             setPatientInformation([])
           });
         // alert(fulldate);
@@ -242,8 +242,8 @@ function Clinician (props) {
             getClinicianBoard.getClinicianBoard()
                 .then((response) => {
                     // API
-                    console.log("All:");
-                    console.log(response.data);
+                    // console.log("All:");
+                    // console.log(response.data);
                     let object = []
                     for(let obj of response.data){
                         if(filter === "All" || obj["status"] === filter){
@@ -257,7 +257,7 @@ function Clinician (props) {
                     }
                     setPatientInformation(object);
                 }).catch((err)=>{
-                    console.log("Can not find clinicians!")
+                    // console.log("Can not find clinicians!")
                     setPatientInformation([])
                 });
 
@@ -266,8 +266,8 @@ function Clinician (props) {
             // let date = "2020-11-11";
             getPatientsDataByDate.getPatientsDataByDate(selectedDate)
             .then((response) => {
-                console.log("Today's Patients")
-                console.log(response.data);
+                // console.log("Today's Patients")
+                // console.log(response.data);
                 let object = []
                 for(let obj of response.data){
                     if(filter === "All" || obj["status"] === filter){
@@ -282,7 +282,7 @@ function Clinician (props) {
 
             setPatientInformation(object);
             }).catch((err)=>{
-            console.log("Can not find clinicians!")
+            // console.log("Can not find clinicians!")
             setPatientInformation([])
           });
         }

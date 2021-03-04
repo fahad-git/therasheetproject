@@ -112,7 +112,7 @@ function ClinicDirector (props) {
         getDirectorBoard.getDirectorBoard()
         .then((response) => {
             // API
-            console.log(response.data);
+            // console.log(response.data);
             let object = []
             for(let obj of response.data){
                 let tmp = { 
@@ -125,7 +125,7 @@ function ClinicDirector (props) {
 
             setClinicianInformation(object);
           }).catch((err)=>{
-            console.log("Can not find clinicians!")
+            // console.log("Can not find clinicians!")
             setClinicianInformation([])
           });
     }, [])
@@ -159,7 +159,7 @@ function ClinicDirector (props) {
         getDirectorBoard.getDirectorBoard()
         .then((response) => {
             // API
-        console.log(response.data);
+        // console.log(response.data);
 
         let object = []
         for(let obj of response.data){
@@ -190,14 +190,14 @@ function ClinicDirector (props) {
                 setClinicianInformation(active_clinic)
             break;
             default:
-                console.log("Default");
+                // console.log("Default");
                 setClinicianInformation(object)
                 // setClinicsInformation(elems);
             break;
         }
 
         }).catch((err)=>{
-        console.log("Can not find clinicians!")
+        // console.log("Can not find clinicians!")
         setClinicianInformation([])
     });
 

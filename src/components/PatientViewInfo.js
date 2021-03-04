@@ -20,7 +20,7 @@ function PatientViewInfo (props) {
     useEffect(()=>{
         getPatientsByID.getPatientsByID(ID)
         .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
             setPatientName(response.data["name"]);
             setDiagnosis(response.data["diagnosis"]);
             setPrecaution(response.data["precausion"]);
@@ -29,7 +29,7 @@ function PatientViewInfo (props) {
             setProtocol(file)
         })
         .catch((err) => {
-            console.log(err);
+            console.log('');
         })
     },[])
 

@@ -48,21 +48,21 @@ function Templates() {
     useEffect(()=>{
         getAllTemplates.getAllTemplates()
         .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
             setTemplatesData(response.data)
         }).catch((err) => {
-            console.log(err);
+            console.log('');
         })
     },[recallTemplate]);
 
     useEffect(()=>{
         getAllExercises.getAllExercises()
         .then((response) => {
-            console.log("Data: ");
-            console.log(response.data);
+            // console.log("Data: ");
+            // console.log(response.data);
             setExerciseData(response.data);
         }).catch((err) => {
-            console.log(err);
+            console.log('');
         })
     },[]);
 
@@ -138,12 +138,12 @@ function Templates() {
         if(isNewTemplate){
             addNewTemplate.addNewTemplate(templateDisplay[1].trim())
             .then(response => {
-                console.log("New Template ID: ");
-                console.log(response.data);
+                // console.log("New Template ID: ");
+                // console.log(response.data);
                 setTemplateDisplay(["none", response.data]);
                 addExerciseSupportingFunction(response.data);
             }).catch(err =>{
-                console.log(err)
+                // console.log(err)
                 return;
             })
         }else 
@@ -160,17 +160,17 @@ function Templates() {
             "exerciseId":parseInt(exName)
         }
 
-        console.log(insertigObject);
+        // console.log(insertigObject);
         
         addExerciseInTemplate.addExerciseInTemplate(insertigObject)
         .then(response => {
-            console.log("Add Ex:")
-            console.log(response.data);
+            // console.log("Add Ex:")
+            // console.log(response.data);
             if(response.data !== []){
                 getAllTemplates.getAllTemplates()
                 .then((res) => {
-                    console.log("Get Temp:")
-                    console.log(res.data);
+                    // console.log("Get Temp:")
+                    // console.log(res.data);
                     setTemplatesData(res.data);
                     
                     let obj = {
@@ -181,10 +181,10 @@ function Templates() {
                     setTemplateDisplay(["none",""]);
                     templateHandler(obj);
                 }).catch((err) => {
-                    console.log(err);
+                    console.log('');
                 })
             }
-        }).catch(err => console.log(err));
+        }).catch(err => console.log(''));
 
     }
 
@@ -223,14 +223,14 @@ function Templates() {
                 window.location.reload();
             }
         })
-        .catch(err => console.log(err));
+        .catch(err => console.log(''));
     }
 
     const removeTemplateHandler = () => {
-        console.log("templete deleting with ID: " + templateDisplay[1]);
+        // console.log("templete deleting with ID: " + templateDisplay[1]);
         deleteTemplate.deleteTemplate(templateDisplay[1])
         .then(response => {
-            console.log(response.data);
+            // console.log(response.data);
             recallTemplateToggle(!recallTemplate);            
             setTemplateExerciseData([]);
             document.getElementById("templateid").selectedIndex = 0;
@@ -239,7 +239,7 @@ function Templates() {
             document.getElementById("exercisetypes").selectedIndex = 0;
             
         }).catch(err => {
-            console.log(err);
+            console.log('');
         });
         removeConfirmToggle(false);
         // window.location.reload(false);        
@@ -303,7 +303,7 @@ function Templates() {
                 exercisesBelongsToTemplate.push(obj)
             }
         }
-        console.log(exercisesBelongsToTemplate);
+        // console.log(exercisesBelongsToTemplate);
         setTemplateExerciseData(exercisesBelongsToTemplate);
         forceUpdate();
     }
@@ -312,7 +312,7 @@ function Templates() {
         // templatesData[templateIndex]["template"] = //templateExerciseData;
         // console.log(JSON.stringify(templatesData));
         // setTemplatesData(templatesData);
-        console.log("addTemplate Working");
+        // console.log("addTemplate Working");
     }
 
     const goBackHandler = () => {

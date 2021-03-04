@@ -6,7 +6,6 @@ import Main from "./components/Main";
 import { BrowserRouter } from 'react-router-dom';
 import Header from './components/Header';
 
-
 function App() {
   
   var [headerComponent, setHeaderComponent] = useState(false);
