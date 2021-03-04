@@ -126,7 +126,7 @@ function RegistrationForm(){
                     "username": userName.trim(),
                     "password": password.trim(),
                     "userType": "director",
-                    "status": "Active"
+                    "status": "Blocked"
                     },
             "clinicName": clinicName.trim(),
             "ownerName": ownerName.trim(),
