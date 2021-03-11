@@ -10,8 +10,6 @@ function App() {
   
   var [headerComponent, setHeaderComponent] = useState(false);
 
-
-
   var [userName, setAccountUsername] = useState("");
   var [accountType, setAccountType] = useState("");
   var [profileUrl, setAccountProfileUrl] = useState("");
