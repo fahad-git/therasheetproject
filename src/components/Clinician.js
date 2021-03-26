@@ -93,7 +93,9 @@ function Clinician (props) {
     const {isClinicianAccountInfoOpen} = useSelector((state) => state.modalReducer);
     const {isClinicianPasswordChange} = useSelector((state) => state.modalReducer);
 
-    const history = useHistory(); 
+    const history = useHistory();
+    const user = JSON.parse(localStorage.getItem("user"));
+ 
     
     var today = new Date();
     var date = String(today.getFullYear() + "-" + (today.getMonth()+1) + "-" + today.getDate());
@@ -238,6 +240,16 @@ function Clinician (props) {
     // componentDidUpdate
     // componentWillUnmount 
     useEffect(()=>{
+
+        if(!user){
+            history.push("/home");
+            return;
+        }
+        else if(user.accountType !== "clinician"){
+            history.push("/" + user.accountType);
+            return;
+        }
+
         if(dropDownValue === "All Patients"){
             getClinicianBoard.getClinicianBoard()
                 .then((response) => {

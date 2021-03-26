@@ -85,7 +85,9 @@ function Admin (props) {
 
     const modalHeaderColor = "rgba(4, 13, 43, 0.8)";
 
-    const history = useHistory();   
+    const history = useHistory(); 
+    
+    const user = JSON.parse(localStorage.getItem("user"));
 
     const dispatch = useDispatch();
 
@@ -209,6 +211,16 @@ function Admin (props) {
     // componentDidUpdate
     // componentWillUnmount 
     useEffect(()=>{
+
+        if(!user){
+            history.push("/home");
+            return;
+        }
+        else if(user.accountType !== "admin"){
+            history.push("/" + user.accountType);
+            return;
+        }
+
         getAdminBoard.getAdminBoard()
         .then((response) => {
             // API
@@ -222,6 +234,15 @@ function Admin (props) {
 
     
     useEffect(()=>{
+        if(!user){
+            history.push("/home");
+            return;
+        }
+        else if(user.accountType !== "admin"){
+            history.push("/" + user.accountType);
+            return;
+        }
+
         getAdminInfo.getAdminInfo()
         .then((response) => {
             // API

@@ -20,7 +20,7 @@ function PatientInfo (props) {
     var [precaution, setPrecaution] = useState('');
     var [exerciseStatus, setExerciseStatus] = useState(props.params[1]);
 
-
+    var [enableCheckIn, toggleEnableCheckIn] = useState(true);
 
     const buttonColor = "rgba(4, 13, 43, 0.8)";
 
@@ -46,6 +46,7 @@ function PatientInfo (props) {
             setDiagnosis(response.data["diagnosis"]);
             setPrecaution(response.data["precausion"]);
             setDate(response.data["date"]);
+            toggleEnableCheckIn(false);
         }).catch((err) => console.log(''));
 
     }, []);
@@ -86,7 +87,7 @@ function PatientInfo (props) {
                                  <div className="col-7" style={{padding: "0px 10px"}}><textarea disabled={true} rows="1" className="form-control" style={{resize: "none"}} type="text" placeholder={date}/></div>
                              </div>                              
 
-                             <button className="btn btn-primary text-center" style={{maxWidth: "200px", float:"right", width:"150px", marginTop:"30px", maxHeight: "50px", backgroundColor:buttonColor}}>Check-In</button>
+                             <button className="btn btn-primary text-center" disabled={enableCheckIn} style={{maxWidth: "200px", float:"right", width:"150px", marginTop:"30px", maxHeight: "50px", backgroundColor:buttonColor}}>Check-In</button>
                          </form>
                      </div>
                  </div>       

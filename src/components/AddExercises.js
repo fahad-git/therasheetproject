@@ -13,7 +13,7 @@ import addIndividualExercise from "../services/director.service";
 
 function AddExercises() {
 
-
+    const user = JSON.parse(localStorage.getItem("user"));
     // const exerciseDataa = [
     //     {
     //     "supertype": "Upper Body",
@@ -61,6 +61,16 @@ function AddExercises() {
 
 
     useEffect(()=>{
+
+        if(!user){
+            history.push("/home");
+            return;
+        }
+        else if(user.accountType !== "director"){
+            history.push("/" + user.accountType);
+            return;
+        }
+
         getAllExercises.getAllExercises()
         .then((response) => {
             // console.log("Data: ");

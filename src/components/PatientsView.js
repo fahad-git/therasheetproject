@@ -14,7 +14,7 @@ import getPatientsForView from '../services/director.service';
 //<a id="downloadable" href="/images/myw3schoolsimage.jpg" download>Click</a>
 function PatientsView() {
 
-    
+    const user = JSON.parse(localStorage.getItem("user"));
     // Accessing data
 
     // let patient1 = {
@@ -72,6 +72,16 @@ function PatientsView() {
 
 
     useEffect(()=>{
+
+        if(!user){
+            history.push("/home");
+            return;
+        }
+        else if(user.accountType !== "director"){
+            history.push("/" + user.accountType);
+            return;
+        }
+
         getPatientsForView.getPatientsForView()
         .then((response) => {
             // console.log(response.data)

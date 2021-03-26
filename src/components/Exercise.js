@@ -14,16 +14,20 @@ import getPatientExerciseByDate from "../services/clinician.service";
 
 function Exercise(){
 
+    const history = useHistory();
+
     const exerciseParamData = JSON.parse(localStorage.getItem("exerciseDataForPatient"));
     // console.log("Data: ", exerciseParamData);
-    const ID = exerciseParamData.id;
-    const patientName = exerciseParamData.patientName;
-    const diagnosis = exerciseParamData.diagnosis
-    const date = exerciseParamData.date;
+
+    const ID = exerciseParamData? exerciseParamData.id : 0;
+    const patientName = exerciseParamData? exerciseParamData.patientName : "";
+    const diagnosis = exerciseParamData? exerciseParamData.diagnosis : "";
+    const date = exerciseParamData? exerciseParamData.date : "";
 
     // var [exerciseStatus, setExerciseStatus] = useState(String(props.location.state.exerciseStatus) );
 
-    const history = useHistory();
+    const user = JSON.parse(localStorage.getItem("user"));
+
     const background_color = "rgba(4, 13, 43, 0.8)";
 
     var today = new Date();
@@ -62,6 +66,23 @@ function Exercise(){
 
 
     useEffect(()=>{
+
+        if(!user){
+            history.push("/home");
+            return;
+        }
+        else if(user.accountType !== "clinician"){
+            history.push("/" + user.accountType);
+            return;
+        }else if(!exerciseParamData){
+            localStorage.removeItem("exerciseParamData");
+            history.push("/" + user.accountType);
+            return;
+        }
+
+
+
+        
         getAllExercises.getAllExercises()
         .then((response) => {
             // console.log("Exercises:");
@@ -273,15 +294,6 @@ function Exercise(){
         forceUpdate();
     }
 
-    const onValueChange = (id,e) => {
-        // alert("working")
-        // console.log(id);
-        // console.log(e.target.value);
-        // console.log(exerciseValues);
-        exerciseValues[id] = e.target.value;
-        // console.log(exerciseValues)
-        setExerciseValues(exerciseValues);
-    }
 
     const removeElementHandler = (superTypeID, subTypeID, exerciseID) => {
         // console.log("All ex:")
@@ -313,6 +325,7 @@ function Exercise(){
     }
 
     const goBackHandler = () => {
+        localStorage.removeItem("exerciseDataForPatient");
         history.goBack();
         // console.log(ID);
 
@@ -327,26 +340,36 @@ function Exercise(){
         // }).catch(err => console.log(err));
     }
 
+    const onValueChange = (id,e) => {
+        // alert("working")
+        // console.log(id);
+        // console.log(e.target.value);
+        // console.log(exerciseValues);
+        console.log(id , " ", e.target.value)
+        exerciseValues[id] = e.target.value;
+        // console.log(exerciseValues)
+        setExerciseValues(exerciseValues);
+    }
+
     const goCheckoutHandler = () => {
 
-
-
+        console.log(exerciseValues)
          //date value pId exId cId */
         const user = JSON.parse(localStorage.getItem("user"));
-        let data = [{
-            "date":"2020-01-12",
-            "value":"10 * 3",
-            "patientId":ID,
-            "exerciseId":1,
-            "clinicianId":user.id
-        },{
-            "date":"2020-01-12",
-            "value":"5",
-            "patientId":ID,
-            "exerciseId":4,
-            "clinicianId":user.id
-        }
-    ]
+        // let data = [{
+        //     "date":"2020-01-12",
+        //     "value":"10 * 3",
+        //     "patientId":ID,
+        //     "exerciseId":1,
+        //     "clinicianId":user.id
+        // },{
+    //         "date":"2020-01-12",
+    //         "value":"5",
+    //         "patientId":ID,
+    //         "exerciseId":4,
+    //         "clinicianId":user.id
+    //     }
+    // ]
 
     let exerciseIds = [];
     for(let superObj of userSelectedExercises)
@@ -356,14 +379,36 @@ function Exercise(){
 
 
     console.log(exerciseIds);
-    // console.log("Sending data");
-    // addPatientExercise.addPatientExercise(data)
-    // .then(response => {
-    //     console.log(response.data);
-    //     history.push("/clinician");
-    // }).catch(err => {
-    //     console.log(err);
-    // });
+
+    let finalData = []
+
+    const today = new Date();
+    var d = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate();
+    console.log(d);
+
+    var data = []
+
+    Object.keys(exerciseValues).forEach(function(key) {
+        if(exerciseIds.includes(parseInt(key)) ){
+            let tmp = {
+                "date":d,
+                "value":exerciseValues[key],
+                "patientId":ID,
+                "exerciseId":parseInt(key),
+                "clinicianId":user.id
+            }      
+            data.push(tmp);      
+        }
+      })
+
+        console.log(data)
+    addPatientExercise.addPatientExercise(data)
+    .then(response => {
+        console.log(response.data);
+        // history.push("/clinician");
+    }).catch(err => {
+        console.log(err);
+    });
    
     }
 

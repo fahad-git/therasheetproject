@@ -6,6 +6,8 @@ import './../assets/css/RegistrationForm.css';
 
 import registerClinic from "../services/auth.service";
 import usernameAvailability from "../services/auth.service";
+import addDefaultExerciseSuperType from "../services/director.service";
+import {upper, lower, backCore} from "./../assets/content/exercises";
 
 function RegistrationForm(){
 
@@ -147,14 +149,39 @@ function RegistrationForm(){
         // console.log(obj);
         registerClinic.registerClinic(obj)
         .then((response) => {
-            // console.log(response.data);
-            if(response.data === "True"){
-                setError({
-                    "display":"block",
-                    "color":"green",
-                    "msg":"Clinic Registered Successfully. Currently your account is disabled until Admin approve your account."
-                })
-                setRegisterBtnDisabled(true);
+            console.log(response.data);
+            if(response.data){
+                console.log("working")
+                console.log(upper);
+                addDefaultExerciseSuperType.addDefaultExerciseSuperType(upper, response.data.clinicId)
+                .then((res1) => {
+                    console.log(response.data)
+                    addDefaultExerciseSuperType.addDefaultExerciseSuperType(lower, response.data.clinicId)
+                    .then((res2) => {
+                        addDefaultExerciseSuperType.addDefaultExerciseSuperType(backCore, response.data.clinicId)
+                        .then((res3) => {
+                            setError({
+                                "display":"block",
+                                "color":"green",
+                                "msg":"Clinic Registered Successfully. Currently your account is disabled until Admin approve your account."
+                            })
+                            setRegisterBtnDisabled(true);
+                        }
+                        ).catch((err) => {
+                            console.log('');
+                            // console.log("Error: " + err);
+                        });
+                    }
+                    ).catch((err) => {
+                        console.log('');
+                        // console.log("Error: " + err);
+                    });
+                }
+                ).catch((err) => {
+                    console.log('');
+                    // console.log("Error: " + err);
+                });
+    
             }
             else
                 setError({
@@ -196,11 +223,11 @@ function RegistrationForm(){
                         </div>
                         <div className="col-12 col-sm-9">
                             <div className="row">
-                                <div className="col-12 form-group"><input className="form-control"  type="text" name="clinicName" placeholder="Clinic Name" onChange = {updateClinicName}/></div>
-                                <div className="col-12 form-group"><input className="form-control" type="text" name="ownerName" placeholder="Owner Name" onChange = {updateOwnerName}/></div>
+                                <div className="col-12 form-group"><input className="form-control"  type="text" name="clinicName" placeholder="Clinic Name" onChange = {updateClinicName} required/></div>
+                                <div className="col-12 form-group"><input className="form-control" type="text" name="ownerName" placeholder="Owner Name" onChange = {updateOwnerName} required/></div>
 
                                 <div className="col-12 form-group">
-                                    <input className="col-12 form-control" type="text" name="facilityaddress" placeholder="Facility Address" onChange = {updateFacilityAddress}/>
+                                    <input className="col-12 form-control" type="text" name="facilityaddress" placeholder="Facility Address" onChange = {updateFacilityAddress} required/>
                                 </div>
                             
 {/* Start */}
@@ -429,11 +456,11 @@ function RegistrationForm(){
                                 </div>
 
                                 <div className="col-7 form-group">
-                                    <input className="col-12 form-control" type="tel" id="phone" name="phone" placeholder="Phone Number" pattern="[0-9]{3,14}" onChange = {updatePhoneNumber}/>
+                                    <input className="col-12 form-control" type="tel" id="phone" name="phone" placeholder="Phone Number" pattern="[0-9]{3,14}" onChange = {updatePhoneNumber} required/>
                                 </div>
 
                                 <div className="col-12 form-group">
-                                    <input className="col-12 form-control" type="email" name="email" placeholder="Email" onChange = {updateEmailAddress}/>
+                                    <input className="col-12 form-control" type="email" name="email" placeholder="Email" onChange = {updateEmailAddress} required/>
                                 </div>
 
                                 {/* this is for username validation */}
@@ -442,17 +469,17 @@ function RegistrationForm(){
                                 </div>
 
                                 <div className="col-7 form-group">
-                                    <input className="form-control" type="text" name="username" placeholder="UserName" onBlur={validateAndUpdateUserName} onChange={(e)=> setUserName(e.target.value)} />
+                                    <input className="form-control" type="text" name="username" placeholder="UserName" onBlur={validateAndUpdateUserName} onChange={(e)=> setUserName(e.target.value)} required/>
                                 </div>
 
                                 <div className="col-12 form-group ">
                                     <div className="col-12 form-control" style={{padding: "20px 0px"}}>
-                                        <input className="col-9 col-md-9 col-lg-10 passwordfield" type={ (password_eye_icon=== "ion-eye") ? "password" : "text"} name="password" placeholder="Password" onFocus={()=> setError({"display":"","color":"", "msg":""})} onBlur={matchPasswordHandler} onChange = {updatePassword} />
+                                        <input className="col-9 col-md-9 col-lg-10 passwordfield" type={ (password_eye_icon=== "ion-eye") ? "password" : "text"} name="password" placeholder="Password" onFocus={()=> setError({"display":"","color":"", "msg":""})} onBlur={matchPasswordHandler} onChange = {updatePassword} required/>
                                         <i className="col-3 col-md-3 col-lg-2" className={password_eye_icon} onClick={togglePassword} ></i>
                                     </div>
                                 </div>
                                 <div className="col-12 form-group">
-                                    <input className="form-control" type="password" name="passwordrepeat" placeholder="Password confirmation" onFocus={()=> setError({"display":"none","color":"", "msg":""})} onBlur={matchPasswordHandler} onChange = {updatePasswordRepeat} />
+                                    <input className="form-control" type="password" name="passwordrepeat" placeholder="Password confirmation" onFocus={()=> setError({"display":"none","color":"", "msg":""})} onBlur={matchPasswordHandler} onChange = {updatePasswordRepeat} required/>
                                 </div>
                                 <label className="col-12 already" style={{display:error["display"], color:error["color"]}}>{error["msg"]}</label>
 

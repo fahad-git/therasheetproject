@@ -18,6 +18,7 @@ import deleteTemplate from '../services/director.service';
 function Templates() {
 
     const history = useHistory();
+    const user = JSON.parse(localStorage.getItem("user"));
 
     var [exerciseData, setExerciseData] = useState([]);
 
@@ -46,6 +47,15 @@ function Templates() {
     var [recallTemplate, recallTemplateToggle] = useState(false);
 
     useEffect(()=>{
+        if(!user){
+            history.push("/home");
+            return;
+        }
+        else if(user.accountType !== "director"){
+            history.push("/" + user.accountType);
+            return;
+        }
+
         getAllTemplates.getAllTemplates()
         .then((response) => {
             // console.log(response.data);
@@ -56,6 +66,16 @@ function Templates() {
     },[recallTemplate]);
 
     useEffect(()=>{
+
+        if(!user){
+            history.push("/home");
+            return;
+        }
+        else if(user.accountType !== "director"){
+            history.push("/" + user.accountType);
+            return;
+        }
+        
         getAllExercises.getAllExercises()
         .then((response) => {
             // console.log("Data: ");

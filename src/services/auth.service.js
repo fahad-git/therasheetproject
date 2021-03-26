@@ -28,13 +28,14 @@ const login = (username, password, loginCallback) => {
         user.data["accessToken"] = response.data["jwt"]
          loginCallback(user.data);
         // return user.data;
+        
       }).catch((err)=>{
         // console.log("Can not find user!")
         // console.log(err);
         loginCallback(null);
       });
     
-     console.log(response.data);
+    //  console.log(response.data);
     
     }).catch((err)=>{
     // console.log("Can not find user!");

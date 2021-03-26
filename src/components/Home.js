@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import './../assets/css/BasicComponents.css';
 import './../assets/bootstrap/css/bootstrap.min.css';
@@ -19,6 +19,9 @@ function Home(props){
     var [isRegistrationFormModalOpen, toggleRegistrationFormModal] = useState(false);
     var [isLoginModalOpen, toggleLoginModal] = useState(false);
 
+    const user = JSON.parse(localStorage.getItem("user"));
+    const history = useHistory();
+
     const login_btn_click_handler = () => {
         //    history.push('/login');
         toggleLoginModal(true);
@@ -30,6 +33,11 @@ function Home(props){
             toggleRegistrationFormModal(true)
             // alert("ok");
      }
+
+     useEffect(() => {
+        if(user)
+            history.push("/" + user.accountType);
+     }, [])
 
     return <div className="home">
                 {/* Modals */}

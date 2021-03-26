@@ -62,7 +62,7 @@ function LoginForm() {
                 localStorage.setItem("user", JSON.stringify(user));
                 // console.log("From Callback:");
                 // console.log(user);
-                
+                                  
                 if(user.accountType.toLowerCase() == "admin")
                     history.push('/admin');
                 else if(user.accountType.toLowerCase() == "director")

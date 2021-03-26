@@ -58,6 +58,11 @@ const addExerciseSuperType = (obj) => {
   return axios.post(API_URL + "addSuperType", obj, { headers: authHeader() } );
 }
 
+const addDefaultExerciseSuperType = (obj, id) => {
+  obj["clinicId"] = id;
+  return axios.post(API_URL + "addDefaultSuperType", obj );
+}
+
 const addExerciseSubType = (obj) => {
   // console.log(JSON.stringify(obj))
   return axios.post(API_URL + "addSubType", obj,  { headers: authHeader() } );
@@ -126,5 +131,6 @@ export default {
     addExerciseInTemplate,
     addNewTemplate,
     deleteExerciseTemplate,
-    deleteTemplate
+    deleteTemplate,
+    addDefaultExerciseSuperType
   };

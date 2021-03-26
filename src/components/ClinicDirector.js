@@ -87,6 +87,8 @@ function ClinicDirector (props) {
     const modalHeaderColor = "rgba(4, 13, 43, 0.8)";
 
     const history = useHistory(); 
+    const user = JSON.parse(localStorage.getItem("user"));
+
     const dispatch = useDispatch();  
 
     var [directorName, setDirectorName] = useState('John');
@@ -109,6 +111,16 @@ function ClinicDirector (props) {
     // componentDidUpdate
     // componentWillUnmount 
     useEffect(()=>{
+
+        if(!user){
+            history.push("/home");
+            return;
+        }
+        else if(user.accountType !== "director"){
+            history.push("/" + user.accountType);
+            return;
+        }
+
         getDirectorBoard.getDirectorBoard()
         .then((response) => {
             // API

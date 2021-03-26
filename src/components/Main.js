@@ -17,19 +17,35 @@ function Main (props) {
     var setHeaderComponent = props.setHeaderComponent;
     var userDetails = props.userDetails;
 
+    const user = JSON.parse(localStorage.getItem("user"));
+
     return(
         <Switch>
             <Route path='/home'><Home setHeaderComponent= {setHeaderComponent} /></Route>
             <Route path='/about'><About setHeaderComponent= {setHeaderComponent} /></Route>
             <Route path='/services'> <Services setHeaderComponent= {setHeaderComponent} /> </Route>
             <Route path='/contact'> <Contact setHeaderComponent= {setHeaderComponent} /> </Route>
-            <Route path='/admin'><Admin setHeaderComponent= {setHeaderComponent}/></Route>
-            <Route path='/director'><ClicicDirector setHeaderComponent= {setHeaderComponent } userDetails={userDetails} /> </Route>
-            <Route path='/clinician'><Clinician setHeaderComponent= {setHeaderComponent} userDetails={userDetails} /> </Route>
-            <Route path="/exercise" ><Exercise /></Route>  
-            <Route path="/patients" ><PatientsView /></Route>
-            <Route path='/addexercise' ><AddExercises /> </Route>
-            <Route path='/templates' ><Templates /> </Route>
+            <Route path='/admin'>
+                <Admin setHeaderComponent= {setHeaderComponent}/>
+            </Route>
+            <Route path='/director'>
+                <ClicicDirector setHeaderComponent= {setHeaderComponent } userDetails={userDetails} />
+            </Route>
+            <Route path='/clinician'>
+                <Clinician setHeaderComponent= {setHeaderComponent} userDetails={userDetails} /> 
+            </Route>
+            <Route path="/exercise" >
+                <Exercise />
+            </Route>  
+            <Route path="/patients" >
+                <PatientsView />
+            </Route>
+            <Route path='/addexercise' >
+                <AddExercises /> 
+            </Route>
+            <Route path='/templates' >
+                <Templates />
+            </Route>
             <Redirect to="/home" />
         </Switch>
     )
