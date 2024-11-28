@@ -1,68 +1,88 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# TheraSheet Project
+
+TheraSheet is a web application designed to facilitate the creation and management of therapeutic exercise sheets for patients. It enables healthcare professionals to generate personalized exercise plans, ensuring patients receive tailored rehabilitation programs.
+
+## Features
+
+- **Exercise Library:** Access a comprehensive library of therapeutic exercises categorized by body region and condition.
+- **Custom Exercise Sheets:** Create and customize exercise sheets specific to individual patient needs.
+- **Printable Formats:** Generate printer-friendly exercise sheets for easy distribution.
+- **User Authentication:** Secure login system for healthcare professionals to manage patient data.
+
+## Prerequisites
+
+Before setting up the project, ensure you have the following installed:
+
+- **Node.js:** JavaScript runtime environment.
+- **npm:** Node package manager, typically installed alongside Node.js.
+
+## Installation
+
+Follow these steps to set up the project locally:
+
+1. **Clone the Repository:**
+
+   ```bash
+   git clone https://github.com/fahad-git/therasheetproject.git
+   ```
+
+2. **Navigate to the Project Directory:**
+
+   ```bash
+   cd therasheetproject
+   ```
+
+3. **Install Dependencies:**
+
+   ```bash
+   npm install
+   ```
+
+## Usage
+
+To start the development server:
+
+```bash
+npm start
+```
+
+Once the server is running, open your browser and navigate to `http://localhost:3000` to access the application.
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- **`npm start`:** Runs the app in development mode. Open `http://localhost:3000` to view it in the browser. The page will reload if you make edits, and you will see any lint errors in the console.
+- **`npm test`:** Launches the test runner in interactive watch mode.
+- **`npm run build`:** Builds the app for production to the `build` folder. It correctly bundles React in production mode and optimizes the build for the best performance.
+- **`npm run eject`:** Removes the single build dependency from your project. **Note:** This is a one-way operation. Once you `eject`, you can't go back!
 
 ## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+To learn more about React and related technologies, consider exploring the following resources:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [React Documentation](https://reactjs.org/docs) - Comprehensive guide on React features and API.
+- [Create React App Documentation](https://facebook.github.io/create-react-app/docs/getting-started) - Information on setting up and using Create React App.
+- [React Router Documentation](https://reactrouter.com/web/guides/quick-start) - Guide on implementing routing in React applications.
 
-### Code Splitting
+You can also check out the [React GitHub repository](https://github.com/facebook/react) for more examples and information.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+## Contributing
 
-### Analyzing the Bundle Size
+Contributions are welcome! To contribute:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+1. **Fork the Repository:** Click on the 'Fork' button at the top right corner of the repository page.
+2. **Create a New Branch:** Use `git checkout -b feature-name` to create a branch for your feature or bug fix.
+3. **Commit Your Changes:** After making changes, commit them with a descriptive message.
+4. **Push to the Branch:** Use `git push origin feature-name` to push your changes to your forked repository.
+5. **Open a Pull Request:** Navigate to the original repository and click on 'New Pull Request' to submit your changes for review.
 
-### Making a Progressive Web App
+Please ensure your code adheres to the project's coding standards and includes relevant tests.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+## License
 
-### Advanced Configuration
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+## Acknowledgements
 
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Special thanks to the contributors and the open-source community for their support and resources.
